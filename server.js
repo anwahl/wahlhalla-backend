@@ -5,13 +5,16 @@ const app = express();
 var { expressjwt: jwt } = require('express-jwt');
 var jwks = require('jwks-rsa');
 const jwtAuthz = require('express-jwt-authz');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 var corsOptions = {
   origin: "*"
 };
 const PORT = process.env.PORT || 8080;
 
 const db = require("./app/models");
-db.sequelize.sync({ force: true });
+db.sequelize.sync();
 
 
 var jwtCheck = jwt({
@@ -19,7 +22,7 @@ var jwtCheck = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: 'https://small-heart-7891.us.auth0.com/.well-known/jwks.json'
+        jwksUri: process.env.JWKS_URI
   }),
   audience: process.env.AUDIENCE,
   issuer: process.env.ISSUER_BASE_URL,
