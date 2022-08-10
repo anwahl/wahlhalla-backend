@@ -4,7 +4,6 @@ const cors = require("cors");
 const app = express();
 var { expressjwt: jwt } = require('express-jwt');
 var jwks = require('jwks-rsa');
-const jwtAuthz = require('express-jwt-authz');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -34,7 +33,7 @@ app.use(cors(corsOptions))
     .use(bodyParser.urlencoded({ extended: true }))
     .use(jwtCheck)
     .get("/", (req, res) => {
-        res.json({ message: "Wahlhalla" })
+        res.json({ message: "Welcome to Wahlhalla!" })
         })
     .listen(PORT, () => {
         console.log(`Server is running on port ${PORT}.`)
