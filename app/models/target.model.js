@@ -4,12 +4,8 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      type: {
+      typeId: {
         type: Sequelize.INTEGER,
-        references: {
-            model: 'targetTypes',
-            key: 'id',
-         },
          allowNull: false
       }
     });

@@ -116,8 +116,8 @@ module.exports = class AssignedTaskController {
         }
 
         const assignedTask = {
-            person: req.body.person,
-            task: req.body.task,
+            personId: req.body.person,
+            taskId: req.body.task,
             type: req.body.type,
             timeOfDay: req.body.timeOfDay,
             dueDate: req.body.dueDate,
@@ -141,7 +141,7 @@ module.exports = class AssignedTaskController {
             return res.status(400).jsonf({ errors: errors.array() });
         }7
 
-        const person = req.query.person;
+        const person = req.params.person;
         var condition = person ? { person: { [Op.eq]: person } } : null;
         AssignedTask.findAll({ where: condition })
         .then(data => {
@@ -161,7 +161,7 @@ module.exports = class AssignedTaskController {
             return res.status(400).jsonf({ errors: errors.array() });
         }7
 
-        const person = req.query.person;
+        const person = req.params.person;
         var type = person ? { type: { [Op.eq]: type } } : null;
         AssignedTask.findAll({ where: condition })
         .then(data => {
@@ -181,7 +181,7 @@ module.exports = class AssignedTaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const complete = req.query.complete;
+        const complete = req.params.complete;
         var condition = complete ? { complete: { [Op.eq]: complete } } : null;
         AssignedTask.findAll({ where: condition })
         .then(data => {
@@ -201,7 +201,7 @@ module.exports = class AssignedTaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const dueDate = req.query.dueDate;
+        const dueDate = req.params.dueDate;
         var condition = dueDate ? { dueDate: { [Op.eq]: dueDate } } : null;
         AssignedTask.findAll({ where: condition })
         .then(data => {
@@ -226,9 +226,7 @@ module.exports = class AssignedTaskController {
         const complete = url.parse(req.url, true).query.complete;
         const type = url.parse(req.url, true).query.type;
         const person = url.parse(req.url, true).query.person;
-
-        //var condition = dueDate ? { dueDate: { [Op.eq]: dueDate } } : null;
-
+        
         var condition = {
             [Op.and]: [
                 dueDate ? { dueDate: dueDate } : null,

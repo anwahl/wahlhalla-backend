@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const AssignedTask = sequelize.define("assignedTask", {
-      person: {
+      personId: {
         type: Sequelize.INTEGER,
         references: {
             model: 'people',
             key: 'id',
          }
       },
-      task: {
+      taskId: {
         type: Sequelize.INTEGER,
         references: {
             model: 'tasks',

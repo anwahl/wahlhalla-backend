@@ -134,7 +134,7 @@ module.exports = class TargetTypeController  {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const description = req.query.description;
+        const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
         TargetType.findAll({ where: condition })
         .then(data => {

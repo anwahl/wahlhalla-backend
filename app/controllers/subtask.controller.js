@@ -113,8 +113,8 @@ module.exports = class SubtaskController {
         }
 
         const subtask = {
-            name: req.body.name,
-            task: req.body.task
+            description: req.body.description,
+            taskId: req.body.task
         };
         Subtask.create(subtask)
         .then(data => {
@@ -134,8 +134,8 @@ module.exports = class SubtaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const task = req.query.task;
-        var condition = task ? { task: { [Op.like]: `%${task}%` } } : null;
+        const task = req.params.task;
+        var condition = task ? { task: { [Op.like]: task } } : null;
         Subtask.findAll({ where: condition })
         .then(data => {
             res.send(data);
@@ -154,7 +154,7 @@ module.exports = class SubtaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const description = req.query.description;
+        const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
         Subtask.findAll({ where: condition })
         .then(data => {

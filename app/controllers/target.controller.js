@@ -2,6 +2,7 @@
 const { validationResult } = require('express-validator');
 const db = require("../models");
 const Target = db.targets;
+const TargetType = db.targetTypes;
 const Op = db.Sequelize.Op;
 
 module.exports = class TargetController {
@@ -14,7 +15,10 @@ module.exports = class TargetController {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        Target.findAll()
+        Target.findAll({ include: {
+                    model: TargetType,
+                    required: true
+                }})
             .then(data => {
                 res.send(data);
             })
@@ -33,7 +37,10 @@ module.exports = class TargetController {
         }
 
         const id = req.params.id;
-        Target.findByPk(id)
+        Target.findByPk(id, {include: {
+                            model: TargetType,
+                            required: true
+                                }})
         .then(data => {
             if (data) {
             res.send(data);
@@ -113,8 +120,8 @@ module.exports = class TargetController {
         }
 
         const target = {
-            name: req.body.name,
-            type: req.body.type
+            description: req.body.description,
+            typeId: req.body.type
         };
         Target.create(target)
         .then(data => {
@@ -134,8 +141,8 @@ module.exports = class TargetController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.query.type;
-        var condition = type ? { type: { [Op.like]: `%${type}%` } } : null;
+        const type = req.params.type;
+        var condition = type ? { type: type } : null;
         Target.findAll({ where: condition })
         .then(data => {
             res.send(data);
@@ -154,7 +161,7 @@ module.exports = class TargetController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const description = req.query.description;
+        const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
         Target.findAll({ where: condition })
         .then(data => {

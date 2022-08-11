@@ -114,8 +114,8 @@ module.exports = class TaskTypeController {
         }
 
         const taskType = {
-            task: req.body.task,
-            type: req.body.type
+            description: req.body.description,
+            category: req.body.category
         };
         TaskType.create(taskType)
         .then(data => {
@@ -135,7 +135,7 @@ module.exports = class TaskTypeController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const category = req.query.category;
+        const category = req.params.category;
         var condition = category ? { category: { [Op.eq]: category } } : null;
         TaskType.findAll({ where: condition })
         .then(data => {
@@ -155,7 +155,7 @@ module.exports = class TaskTypeController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const description = req.query.description;
+        const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
         TaskType.findAll({ where: condition })
         .then(data => {

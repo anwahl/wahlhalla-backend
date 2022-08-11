@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      assignedTask: {
+      assignedTaskId: {
         type: Sequelize.INTEGER,
         references: {
             model: 'assignedTasks',

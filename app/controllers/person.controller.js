@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const db = require("../models");
 const Person = db.persons;
 const Op = db.Sequelize.Op;
+const Sequelize = require("sequelize");
 
 module.exports = class PersonController  {
     constructor() {
@@ -136,7 +137,7 @@ module.exports = class PersonController  {
         return res.status(400).json({ errors: errors.array() });
         }
 
-        const name = req.query.name;
+        const name = req.params.name;
         var condition = name ? { name: { [Op.or]: [
                         Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('firstName')), 'LIKE', `%${name}%`),
                         Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('lastName')), 'LIKE', `%${name}%`),

@@ -1,6 +1,8 @@
 
 const { validationResult } = require('express-validator');
 const db = require("../models");
+const Target = db.targets;
+const TaskType = db.taskTypes;
 const Task = db.tasks;
 const Op = db.Sequelize.Op;
 
@@ -14,7 +16,13 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        Task.findAll()
+        Task.findAll({include: [{
+                        model: TaskType,
+                        required: true
+                            }, {
+                                model: Target,
+                                required: true
+                                    }]})
             .then(data => {
                 res.send(data);
             })
@@ -33,7 +41,13 @@ module.exports = class TaskController {
         }
 
         const id = req.params.id;
-        Task.findByPk(id)
+        Task.findByPk(id, { include: [{
+            model: TaskType,
+            required: true
+                }, {
+                    model: Target,
+                    required: true
+                        }]})
         .then(data => {
             if (data) {
             res.send(data);
@@ -114,9 +128,9 @@ module.exports = class TaskController {
         }
 
         const task = {
-            name: req.body.name,
-            type: req.body.type,
-            target: req.body.target,
+            description: req.body.description,
+            typeId: req.body.type,
+            targetId: req.body.target,
             value: req.body.value
         };
         Task.create(task)
@@ -137,9 +151,15 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.query.type;
+        const type = req.params.type;
         var condition = type ? { type: { [Op.eq]: type } } : null;
-        Task.findAll({ where: condition })
+        Task.findAll([{ where: condition }, {include: [{
+                        model: TaskType,
+                        required: true
+                            }, {
+                                model: Target,
+                                required: true
+                                    }]}])
         .then(data => {
             res.send(data);
         })
@@ -157,9 +177,15 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const description = req.query.description;
+        const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        Task.findAll({ where: condition })
+        Task.findAll([{ where: condition }, {include: [{
+            model: TaskType,
+            required: true
+                }, {
+                    model: Target,
+                    required: true
+                        }]}])
         .then(data => {
             res.send(data);
         })
@@ -177,9 +203,15 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.query.type;
+        const type = req.params.type;
         var condition = target ? { target: { [Op.eq]: target } } : null;
-        Task.findAll({ where: condition })
+        Task.findAll([{ where: condition }, {include: [{
+            model: TaskType,
+            required: true
+                }, {
+                    model: Target,
+                    required: true
+                        }]}])
         .then(data => {
             res.send(data);
         })

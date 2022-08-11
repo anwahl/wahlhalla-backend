@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      type: {
+      typeId: {
         type: Sequelize.INTEGER,
         references: {
             model: 'taskTypes',
@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
          },
          allowNull: false
       },
-      target: {
+      targetId: {
         type: Sequelize.INTEGER,
         references: {
             model: 'targets',

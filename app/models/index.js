@@ -20,4 +20,11 @@ db.targets = require("./target.model.js")(sequelize, Sequelize);
 db.tasks = require("./task.model.js")(sequelize, Sequelize);
 db.assignedTasks = require("./assignedTask.model.js")(sequelize, Sequelize);
 db.subtasks = require("./subtask.model.js")(sequelize, Sequelize);
+
+db.targets.belongsTo(db.targetTypes, { foreignKey: "typeId" });
+
+db.tasks.belongsTo(db.targets, { foreignKey: "targetId" });
+db.tasks.belongsTo(db.taskTypes, { foreignKey: "typeId" });
+
+
 module.exports = db;
