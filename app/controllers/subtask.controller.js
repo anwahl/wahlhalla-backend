@@ -146,8 +146,8 @@ module.exports = class SubtaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const task = req.params.taskId;
-        var condition = task ? { task: { [Op.like]: task } } : null;
+        const assignedTaskId = req.params.assignedTaskId;
+        var condition = assignedTaskId ? { assignedTaskId: { [Op.like]: assignedTaskId } } : null;
         Subtask.findAll({ where: condition }, {include: [{
                             model: AssignedTask,
                             required: true, include: [{

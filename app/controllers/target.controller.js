@@ -17,7 +17,7 @@ module.exports = class TargetController {
         
         Target.findAll({ include: {
                     model: TargetType,
-                    required: true
+                    required: true, 
                 }})
             .then(data => {
                 res.send(data);
@@ -121,7 +121,7 @@ module.exports = class TargetController {
 
         const target = {
             description: req.body.description,
-            typeId: req.body.type
+            typeId: req.body.typeId
         };
         Target.create(target)
         .then(data => {
@@ -141,8 +141,8 @@ module.exports = class TargetController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.params.type;
-        var condition = type ? { type: type } : null;
+        const typeId = req.params.typeId;
+        var condition = typeId ? { typeId: typeId } : null;
         Target.findAll({ where: condition })
         .then(data => {
             res.send(data);

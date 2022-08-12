@@ -129,8 +129,8 @@ module.exports = class TaskController {
 
         const task = {
             description: req.body.description,
-            typeId: req.body.type,
-            targetId: req.body.target,
+            typeId: req.body.typeId,
+            targetId: req.body.targetId,
             value: req.body.value
         };
         Task.create(task)
@@ -151,7 +151,7 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.params.type;
+        const type = req.params.typeId;
         var condition = type ? { type: { [Op.eq]: type } } : null;
         Task.findAll([{ where: condition }, {include: [{
                                             model: TaskType,
@@ -203,7 +203,7 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const type = req.params.type;
+        const target = req.params.typeId;
         var condition = target ? { target: { [Op.eq]: target } } : null;
         Task.findAll([{ where: condition }, {include: [{
             model: TaskType,
