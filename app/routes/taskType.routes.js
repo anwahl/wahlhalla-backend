@@ -2,9 +2,7 @@ module.exports = app => {
     const TaskType = require("../controllers/taskType.controller.js");
     const validator = require("../validators/validator");
     var router = require("express").Router();
-    const db = require("../models");
-    const _taskType = db.persons;
-    var taskType = new TaskType(_taskType);
+    var taskType = new TaskType();
 
     router.get("/", taskType.findAll);
     router.post("/",  validator.validateTaskType, taskType.create);

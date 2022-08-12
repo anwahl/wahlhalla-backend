@@ -2,9 +2,7 @@ module.exports = app => {
     const AssignedTask = require("../controllers/assignedTask.controller.js");
     const validator = require("../validators/validator");
     var router = require("express").Router();
-    const db = require("../models");
-    const _assignedTask = db.persons;
-    var assignedTask = new AssignedTask(_assignedTask);
+    var assignedTask = new AssignedTask();
 
     router.get("/", assignedTask.findAll);
     router.post("/",  validator.validateAssignedTask, assignedTask.create);

@@ -1,6 +1,9 @@
 
 const { validationResult } = require('express-validator');
 const db = require("../models");
+const Task = db.tasks;
+const Target = db.targets;
+const Person = db.persons;
 const AssignedTask = db.assignedTasks;
 const Op = db.Sequelize.Op;
 const url = require('url');
@@ -16,7 +19,15 @@ module.exports = class AssignedTaskController {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        AssignedTask.findAll()
+        AssignedTask.findAll({include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
             .then(data => {
                 res.send(data);
             })
@@ -35,7 +46,15 @@ module.exports = class AssignedTaskController {
         }
 
         const id = req.params.id;
-        AssignedTask.findByPk(id)
+        AssignedTask.findByPk(id, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             if (data) {
             res.send(data);
@@ -116,8 +135,8 @@ module.exports = class AssignedTaskController {
         }
 
         const assignedTask = {
-            personId: req.body.person,
-            taskId: req.body.task,
+            personId: req.body.personId,
+            taskId: req.body.taskId,
             type: req.body.type,
             timeOfDay: req.body.timeOfDay,
             dueDate: req.body.dueDate,
@@ -143,7 +162,15 @@ module.exports = class AssignedTaskController {
 
         const person = req.params.person;
         var condition = person ? { person: { [Op.eq]: person } } : null;
-        AssignedTask.findAll({ where: condition })
+        AssignedTask.findAll({ where: condition }, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             res.send(data);
         })
@@ -163,7 +190,15 @@ module.exports = class AssignedTaskController {
 
         const person = req.params.person;
         var type = person ? { type: { [Op.eq]: type } } : null;
-        AssignedTask.findAll({ where: condition })
+        AssignedTask.findAll({ where: condition }, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             res.send(data);
         })
@@ -183,7 +218,15 @@ module.exports = class AssignedTaskController {
 
         const complete = req.params.complete;
         var condition = complete ? { complete: { [Op.eq]: complete } } : null;
-        AssignedTask.findAll({ where: condition })
+        AssignedTask.findAll({ where: condition }, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             res.send(data);
         })
@@ -203,7 +246,15 @@ module.exports = class AssignedTaskController {
 
         const dueDate = req.params.dueDate;
         var condition = dueDate ? { dueDate: { [Op.eq]: dueDate } } : null;
-        AssignedTask.findAll({ where: condition })
+        AssignedTask.findAll({ where: condition }, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             res.send(data);
         })
@@ -236,7 +287,15 @@ module.exports = class AssignedTaskController {
             ]
         };
 
-        AssignedTask.findAll({ where: condition })
+        AssignedTask.findAll({ where: condition }, {include: [{
+                                model: Task,
+                                required: true, include: [{
+                                    model: Target,
+                                    required: true
+                                    }]}, {
+                                model: Person,
+                                required: true
+                                    }]})
         .then(data => {
             res.send(data);
         })

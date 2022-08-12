@@ -2,9 +2,7 @@ module.exports = app => {
     const TargetType = require("../controllers/targetType.controller.js");
     const validator = require("../validators/validator");
     var router = require("express").Router();
-    const db = require("../models");
-    const _targetType = db.persons;
-    var targetType = new TargetType(_targetType);
+    var targetType = new TargetType();
 
     router.get("/", targetType.findAll);
     router.post("/",  validator.validateTargetType, targetType.create);

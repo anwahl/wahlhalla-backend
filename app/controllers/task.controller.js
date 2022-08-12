@@ -20,9 +20,9 @@ module.exports = class TaskController {
                         model: TaskType,
                         required: true
                             }, {
-                                model: Target,
-                                required: true
-                                    }]})
+                        model: Target,
+                        required: true
+                            }]})
             .then(data => {
                 res.send(data);
             })
@@ -42,11 +42,11 @@ module.exports = class TaskController {
 
         const id = req.params.id;
         Task.findByPk(id, { include: [{
-            model: TaskType,
-            required: true
-                }, {
-                    model: Target,
-                    required: true
+                        model: TaskType,
+                        required: true
+                            }, {
+                        model: Target,
+                        required: true
                         }]})
         .then(data => {
             if (data) {
@@ -154,12 +154,12 @@ module.exports = class TaskController {
         const type = req.params.type;
         var condition = type ? { type: { [Op.eq]: type } } : null;
         Task.findAll([{ where: condition }, {include: [{
-                        model: TaskType,
-                        required: true
-                            }, {
-                                model: Target,
-                                required: true
-                                    }]}])
+                                            model: TaskType,
+                                            required: true
+                                                }, {
+                                            model: Target,
+                                            required: true
+                                                }]}])
         .then(data => {
             res.send(data);
         })
@@ -180,12 +180,12 @@ module.exports = class TaskController {
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
         Task.findAll([{ where: condition }, {include: [{
-            model: TaskType,
-            required: true
-                }, {
-                    model: Target,
-                    required: true
-                        }]}])
+                                        model: TaskType,
+                                        required: true
+                                            }, {
+                                        model: Target,
+                                        required: true
+                                            }]}])
         .then(data => {
             res.send(data);
         })

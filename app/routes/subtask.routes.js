@@ -2,9 +2,7 @@ module.exports = app => {
     const Subtask = require("../controllers/subtask.controller.js");
     const validator = require("../validators/validator");
     var router = require("express").Router();
-    const db = require("../models");
-    const _subtask = db.persons;
-    var subtask = new Subtask(_subtask);
+    var subtask = new Subtask();
 
     router.get("/", subtask.findAll);
     router.post("/",  validator.validateSubtask, subtask.create);

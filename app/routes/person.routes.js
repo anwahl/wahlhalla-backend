@@ -2,9 +2,7 @@ module.exports = app => {
     const Person = require("../controllers/person.controller.js");
     const validator = require("../validators/validator");
     var router = require("express").Router();
-    const db = require("../models");
-    const _person = db.persons;
-    var person = new Person(_person);
+    var person = new Person();
 
     router.get("/", person.findAll);
     router.post("/",  validator.validatePerson, person.create);

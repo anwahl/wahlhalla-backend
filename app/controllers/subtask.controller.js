@@ -1,7 +1,9 @@
 
 const { validationResult } = require('express-validator');
 const db = require("../models");
-const Subtask = db.Subtask;
+const Task = db.tasks;
+const AssignedTask = db.assignedTasks;
+const Subtask = db.subtasks;
 const Op = db.Sequelize.Op;
 
 module.exports = class SubtaskController {
@@ -14,11 +16,16 @@ module.exports = class SubtaskController {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        Subtask.findAll()
+        Subtask.findAll({include: [{
+                            model: AssignedTask,
+                            required: true, include: [{
+                                model: Task,
+                                required: true
+                                }]}]})
             .then(data => {
                 res.send(data);
             })
-            .catch(err => {
+            .catch(err =>                 {
             res.status(500).send({
                 message:
                 err.message || "Some error occurred while retrieving subtask."
@@ -33,7 +40,12 @@ module.exports = class SubtaskController {
         }
 
         const id = req.params.id;
-        Subtask.findByPk(id)
+        Subtask.findByPk(id, {include: [{
+                            model: AssignedTask,
+                            required: true, include: [{
+                                model: Task,
+                                required: true
+                                }]}]})
         .then(data => {
             if (data) {
             res.send(data);
@@ -114,7 +126,7 @@ module.exports = class SubtaskController {
 
         const subtask = {
             description: req.body.description,
-            taskId: req.body.task
+            assignedTaskId: req.body.assignedTaskId
         };
         Subtask.create(subtask)
         .then(data => {
@@ -134,9 +146,14 @@ module.exports = class SubtaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const task = req.params.task;
+        const task = req.params.taskId;
         var condition = task ? { task: { [Op.like]: task } } : null;
-        Subtask.findAll({ where: condition })
+        Subtask.findAll({ where: condition }, {include: [{
+                            model: AssignedTask,
+                            required: true, include: [{
+                                model: Task,
+                                required: true
+                                }]}]})
         .then(data => {
             res.send(data);
         })
@@ -156,7 +173,12 @@ module.exports = class SubtaskController {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        Subtask.findAll({ where: condition })
+        Subtask.findAll({ where: condition }, {include: [{
+                            model: AssignedTask,
+                            required: true, include: [{
+                                model: Task,
+                                required: true
+                                }]}]})
         .then(data => {
             res.send(data);
         })

@@ -26,5 +26,9 @@ db.targets.belongsTo(db.targetTypes, { foreignKey: "typeId" });
 db.tasks.belongsTo(db.targets, { foreignKey: "targetId" });
 db.tasks.belongsTo(db.taskTypes, { foreignKey: "typeId" });
 
+db.assignedTasks.belongsTo(db.tasks, { foreignKey: "taskId" });
+db.assignedTasks.belongsTo(db.persons, { foreignKey: "personId" });
+
+db.subtasks.belongsTo(db.assignedTasks, { foreignKey: "assignedTaskId" });
 
 module.exports = db;
