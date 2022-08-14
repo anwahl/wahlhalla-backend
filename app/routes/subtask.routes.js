@@ -9,7 +9,8 @@ module.exports = app => {
     router.get("/:id", validator.validateID, subtask.findOne);
     router.put("/:id", validator.validateID, validator.validateSubtask, subtask.update);
     router.delete("/:id", validator.validateID, subtask.delete);
-    router.get("/task/:task", validator.validateName, subtask.findByTask);
+    router.get("/assignedTask/:assignedTaskId", validator.validateAssignedTaskID, subtask.findByAssignedTask);
     router.get("/description/:description", validator.validateName, subtask.findByDescription);
+    router.get("/assignedTask/:assignedTaskId/description/:description", validator.validateSubtask, subtask.findByTaskAndDescription);
     app.use('/api/subtask', router);
 };

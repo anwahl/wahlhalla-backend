@@ -14,5 +14,6 @@ module.exports = app => {
     router.get("/completion/:complete",  validator.validateCompletion, assignedTask.findByCompletion);
     router.get("/dueDate/:dueDate",  validator.validateDueDate, assignedTask.findByDueDate);
     router.get("/query/", validator.validateAssignedTaskQuery, assignedTask.findByQuery);
+    router.get("/category/:category", validator.validateAssignedTaskCategory, assignedTask.findByCategory);
     app.use('/api/assignedTask', router);
 };

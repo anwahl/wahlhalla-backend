@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const db = require("../models");
 const Task = db.tasks;
 const Target = db.targets;
+const TaskType = db.taskTypes;
 const Person = db.persons;
 const AssignedTask = db.assignedTasks;
 const Op = db.Sequelize.Op;
@@ -139,6 +140,7 @@ module.exports = class AssignedTaskController {
             taskId: req.body.taskId,
             type: req.body.type,
             timeOfDay: req.body.timeOfDay,
+            endTimeOfDay: req.body.endTimeOfDay,
             dueDate: req.body.dueDate,
             complete: req.body.complete
         };
@@ -296,6 +298,60 @@ module.exports = class AssignedTaskController {
                                 model: Person,
                                 required: true
                                     }]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving AssignedTasks."
+            });
+        });
+    };
+
+    findByCategory = (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const category = req.params.category;
+        let findBy;
+        if (category == 'ASSIGNEDTASK') {
+            findBy = {include: [{
+                model: Task,
+                required: true, include: [{
+                    model: Target,
+                    required: true
+                    },
+                    {
+                        model: TaskType,
+                        required: true
+                        }]}, {
+                model: Person,
+                required: true
+                    }]};
+        } else {
+            var condition = {
+                [Op.and]: [
+                    category ? { '$task.taskType.category$': category } : null
+                ]
+            };
+            findBy = { where: condition, include: [{
+                                    model: Task,
+                                    required: true, include: [{
+                                        model: Target,
+                                        required: true
+                                        },
+                                        {
+                                            model: TaskType,
+                                            required: true
+                                            }]}, {
+                                    model: Person,
+                                    required: true
+                                        }]};
+        }
+        AssignedTask.findAll(findBy)
         .then(data => {
             res.send(data);
         })

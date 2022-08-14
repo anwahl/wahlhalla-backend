@@ -140,15 +140,15 @@ module.exports = class SubtaskController {
         });
     };
 
-    findByTask= (req, res) => {
+    findByAssignedTask= (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
         const assignedTaskId = req.params.assignedTaskId;
-        var condition = assignedTaskId ? { assignedTaskId: { [Op.like]: assignedTaskId } } : null;
-        Subtask.findAll({ where: condition }, {include: [{
+        var condition = assignedTaskId ? { assignedTaskId: assignedTaskId } : null;
+        Subtask.findAll({ where: condition, include: [{
                             model: AssignedTask,
                             required: true, include: [{
                                 model: Task,
@@ -173,7 +173,33 @@ module.exports = class SubtaskController {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        Subtask.findAll({ where: condition }, {include: [{
+        Subtask.findAll({ where: condition, include: [{
+                            model: AssignedTask,
+                            required: true, include: [{
+                                model: Task,
+                                required: true
+                                }]}]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving Subtasks."
+            });
+        });
+    };
+
+    findByTaskAndDescription = (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const description = req.params.description;
+        const assignedTaskId = req.params.assignedTaskId;
+        var condition = {[Op.and]: [ {description: { [Op.like]: `%${description}%` } } , {assignedTaskId: assignedTaskId}]};
+        Subtask.findAll({ where: condition, include: [{
                             model: AssignedTask,
                             required: true, include: [{
                                 model: Task,

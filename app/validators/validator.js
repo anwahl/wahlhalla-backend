@@ -53,6 +53,13 @@ exports.validateTaskCategory = [
   }
 ];
 
+exports.validateAssignedTaskCategory = [
+  check('category').notEmpty().isIn(['CHORE','BILL','APPOINTMENT','LIST','OTHER','ASSIGNEDTASK']).withMessage("Category must be 'CHORE','BILL','APPOINTMENT','LIST', 'ASSIGNEDTASKS', or 'OTHER'"),
+  (req, res, next) => {
+    next();
+  }
+];
+
 exports.validateTask = [
   check('typeId').notEmpty().withMessage("Type Required").isInt(),
   check('targetId').notEmpty().withMessage("Target Required").isInt(),
@@ -82,7 +89,8 @@ exports.validateAssignedTask = [
   check('personId').notEmpty().withMessage("Person Required").isInt(),
   check('taskId').notEmpty().withMessage("Task Required").isInt(),
   check('type').notEmpty().isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
-  check('timeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm a format."),
+  check('timeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
+  check('endTimeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
   check('dueDate').notEmpty().toDate(),
   check('complete').notEmpty().isBoolean().withMessage("Complete must be true or false."),
   (req, res, next) => {
