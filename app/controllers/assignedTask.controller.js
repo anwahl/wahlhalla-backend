@@ -164,6 +164,70 @@ module.exports = class AssignedTaskController {
             }
         });
     };
+
+    updateAllInSeries = (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const id = req.params.id;
+        AssignedTask.findByPk(id)
+        .then(data => {
+            let values = {
+                personId: req.body.personId,
+                taskId: req.body.taskId,
+                type: req.body.type,
+                timeOfDay: req.body.timeOfDay,
+                endTimeOfDay: req.body.endTimeOfDay,
+                occurrences: req.body.occurrences,
+                complete: req.body.complete
+            }
+            AssignedTask.update(values, {
+                where: {
+                    personId: data['dataValues']['personId'],
+                    taskId: data['dataValues']['taskId'],
+                    type: data['dataValues']['type'],
+                    timeOfDay: data['dataValues']['timeOfDay'],
+                    endTimeOfDay: data['dataValues']['endTimeOfDay'],
+                    occurrences: data['dataValues']['occurrences']
+                }
+                
+            })
+            .then(num => {
+                if (num >= 1) {
+                    if (req.body.complete) {
+                        //TODO: Add Twilio notif. here
+                    }
+                    if (!res.headersSent) {
+                        res.send({
+                            message: "AssignedTask was updated successfully."
+                        });
+                    }
+                } else {
+                    if (!res.headersSent) {
+                        res.send({
+                            message: `Cannot update assignedTask with id=${id}. Maybe assignedTask was not found or req.body is empty!`
+                        });
+                    }
+                }
+            })
+            .catch(err => {
+                if (!res.headersSent) {
+                    res.status(500).send({
+                    message: "Error updating assignedTask with id=" + id + ". " + err
+                    });
+                }
+            });  
+        })
+        .catch(err => {
+            if (!res.headersSent) {
+                res.status(500).send({
+                message: "Error finding assignedTask with id=" + id + ". " + err
+                });
+            }
+        });  
+    };
         
     delete = (req, res) => {
         const errors = validationResult(req);
@@ -191,6 +255,51 @@ module.exports = class AssignedTaskController {
             message: "Could not delete assignedTask with id=" + id
             });
         });
+    };
+
+    
+    deleteAllInSeries = (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        
+        const id = req.params.id;
+        AssignedTask.findByPk(id)
+        .then(data => {
+            AssignedTask.destroy({
+                where: {
+                    personId: data['dataValues'].personId,
+                    taskId: data['dataValues'].taskId,
+                    type: data['dataValues'].type,
+                    timeOfDay: data['dataValues'].timeOfDay,
+                    endTimeOfDay: data['dataValues'].endTimeOfDay,
+                    occurrences: data['dataValues'].occurrences
+                }
+            })
+            .then(num => {
+                if (num == 1) {
+                res.send({
+                    message: "AssignedTasks were deleted successfully!"
+                });
+                } else {
+                res.send({
+                    message: `Cannot delete assignedTask with id=${id}. Maybe assignedTask was not found!`
+                });
+                }
+            })
+            .catch(err => {
+                res.status(500).send({
+                message: "Could not delete assignedTask with id=" + id
+                });
+            });
+        })
+        .catch(err => {
+            res.status(500).send({
+            message: "Could not delete assignedTask with id=" + id
+            });
+        })
+        
     };
 
 
