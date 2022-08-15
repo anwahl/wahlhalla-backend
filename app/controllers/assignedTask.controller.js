@@ -81,23 +81,87 @@ module.exports = class AssignedTaskController {
 
         const id = req.params.id;
         AssignedTask.update(req.body, {
-        where: { id: id }
-        })
+        where: { id: id }  })
         .then(num => {
             if (num == 1) {
-            res.send({
-                message: "AssignedTask was updated successfully."
-            });
+                if (req.body.complete) {
+                    //TODO: Add Twilio notif. here
+                }
+                if (req.body.complete == true && req.body.type != 'STANDALONE' && (req.body.occurrences == 0 || req.body.occurrences == null)) {
+                    AssignedTask.findAll({
+                        limit: 1,
+                        where: {
+                            personId: req.body.personId,
+                            taskId: req.body.taskId,
+                            type: req.body.type,
+                            timeOfDay: req.body.timeOfDay,
+                            endTimeOfDay: req.body.endTimeOfDay,
+                            occurrences: req.body.occurrences
+                        },
+                        order: [ [ 'dueDate', 'DESC' ]]
+                    })
+                    .then(data => {
+                        let newDate = new Date();
+                        if (req.body.type == 'DAILY') {
+                            newDate = dateFunc.addHours(dateFunc.addDays(new Date(data[0]['dataValues'].dueDate), 1), 6);
+                        } else if (req.body.type == 'WEEKLY') {
+                            newDate = dateFunc.addHours(dateFunc.addDays(new Date(data[0]['dataValues'].dueDate), 7), 6);
+                        } else if (req.body.type == 'MONTHLY') {
+                            newDate = dateFunc.addHours(dateFunc.addMonths(new Date(data[0]['dataValues'].dueDate), 1), 6);
+                        } else if (req.body.type == 'YEARLY') {
+                            newDate = dateFunc.addHours(dateFunc.addYears(new Date(data[0]['dataValues'].dueDate), 1), 6);
+                        }
+                        const assignedTask = {
+                            personId: req.body.personId,
+                            taskId: req.body.taskId,
+                            type: req.body.type,
+                            timeOfDay: req.body.timeOfDay,
+                            endTimeOfDay: req.body.endTimeOfDay,
+                            dueDate: newDate,
+                            occurrences: req.body.occurrences,
+                            complete: false
+                        };
+                        AssignedTask.create(assignedTask)
+                        .then(data => {
+                            if (!res.headersSent) {
+                                res.send(data);
+                            }
+                        })
+                        .catch(err => {
+                            if (!res.headersSent) {
+                                res.status(500).send({
+                                message: "Error creating AssignedTask."
+                            });
+                            }
+                    });
+                    }).catch(err => {
+                        if (!res.headersSent) {
+                                res.status(500).send({
+                                message: "Error finding Assigned Tasks."
+                            });
+                        }
+                    });
+                }
+
+            if (!res.headersSent) {
+                res.send({
+                    message: "AssignedTask was updated successfully."
+                });
+            }
             } else {
-            res.send({
-                message: `Cannot update assignedTask with id=${id}. Maybe assignedTask was not found or req.body is empty!`
-            });
+                if (!res.headersSent) {
+                    res.send({
+                        message: `Cannot update assignedTask with id=${id}. Maybe assignedTask was not found or req.body is empty!`
+                    });
+                }
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating assignedTask with id=" + id
-            });
+            if (!res.headersSent) {
+                res.status(500).send({
+                message: "Error updating assignedTask with id=" + id
+                });
+            }
         });
     };
         
