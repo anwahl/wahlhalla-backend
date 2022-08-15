@@ -29,6 +29,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
+      occurrences: {
+        type: Sequelize.INTEGER
+      },
       complete: {
         type: Sequelize.BOOLEAN,
         allowNull: false

@@ -93,6 +93,7 @@ exports.validateAssignedTask = [
   check('endTimeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
   check('dueDate').notEmpty().toDate(),
   check('complete').notEmpty().isBoolean().withMessage("Complete must be true or false."),
+  check('occurrences').optional({checkFalsy: true}).isInt().withMessage("Number of Occurrences must be a number."),
   (req, res, next) => {
     next();
   }

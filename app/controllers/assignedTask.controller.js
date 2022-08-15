@@ -1,5 +1,6 @@
 
 const { validationResult } = require('express-validator');
+const dateFunc = require('date-and-time');
 const db = require("../models");
 const Task = db.tasks;
 const Target = db.targets;
@@ -142,17 +143,66 @@ module.exports = class AssignedTaskController {
             timeOfDay: req.body.timeOfDay,
             endTimeOfDay: req.body.endTimeOfDay,
             dueDate: req.body.dueDate,
+            occurrences: req.body.occurrences,
             complete: req.body.complete
         };
         AssignedTask.create(assignedTask)
         .then(data => {
-        res.send(data);
+            if (data.type != 'STANDALONE') {
+                let occurrences = 0, newDate = new Date(), assignedTasks = [];
+                if (data.occurrences > 0) {
+                    occurrences = data.occurrences - 1;
+                } else {
+                    occurrences = 30;
+                }
+                for (let i = 1; i <= occurrences; i++) {
+                    if (data.type == 'DAILY') {
+                        newDate = dateFunc.addHours(dateFunc.addDays(new Date(data.dueDate), (1 * i)), 6);
+                    } else if (data.type == 'WEEKLY') {
+                        newDate = dateFunc.addHours(dateFunc.addDays(new Date(data.dueDate), (7 * i)), 6);
+                    } else if (data.type == 'MONTHLY') {
+                        newDate = dateFunc.addHours(dateFunc.addMonths(new Date(data.dueDate), 1 * i), 6);
+                    } else if (data.type == 'YEARLY') {
+                        newDate = dateFunc.addHours(dateFunc.addYears(new Date(data.dueDate), 1 * i), 6);
+                    }
+                    
+                    assignedTasks.push({
+                        personId: data.personId,
+                        taskId: data.taskId,
+                        type: data.type,
+                        timeOfDay: data.timeOfDay,
+                        endTimeOfDay: data.endTimeOfDay,
+                        dueDate: newDate,
+                        occurrences: data.occurrences,
+                        complete: false
+                    });
+                }
+                AssignedTask.bulkCreate(assignedTasks)
+                .then(data => {
+                    if (!res.headersSent) {
+                        res.send(data);
+                    }
+                })
+                .catch(err => {
+                    if (!res.headersSent) {
+                        res.status(500).send({
+                            message:
+                            err.message || "Some error occurred while creating the AssignedTasks."
+                        });
+                    }
+                });
+            }
+            if (!res.headersSent) {
+                res.send(data);
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the AssignedTask."
-        });
+            if (!res.headersSent) {
+                res.status(500).send({
+                    message:
+                    err.message || "Some error occurred while creating the AssignedTask."
+                });
+            }
         });
     };
 
