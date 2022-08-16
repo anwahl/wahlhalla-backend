@@ -22,9 +22,15 @@ module.exports = (sequelize, Sequelize) => {
       timeOfDay: {
         type: Sequelize.TIME
       },
+      endTimeOfDay: {
+        type: Sequelize.TIME
+      },
       dueDate: {
         type: Sequelize.DATEONLY,
         allowNull: false
+      },
+      occurrences: {
+        type: Sequelize.INTEGER
       },
       complete: {
         type: Sequelize.BOOLEAN,

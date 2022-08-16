@@ -8,11 +8,14 @@ module.exports = app => {
     router.post("/",  validator.validateAssignedTask, assignedTask.create);
     router.get("/:id", validator.validateID, assignedTask.findOne);
     router.put("/:id", validator.validateID, validator.validateAssignedTask, assignedTask.update);
+    router.put("/series/:id", validator.validateID, validator.validateAssignedTask, assignedTask.updateAllInSeries);
     router.delete("/:id", validator.validateID, assignedTask.delete);
+    router.delete("/series/:id", validator.validateID, assignedTask.deleteAllInSeries);
     router.get("/person/:person", validator.validatePersonID, assignedTask.findByPerson);
     router.get("/type/:type", validator.validateAssignedTaskType, assignedTask.findByType);
     router.get("/completion/:complete",  validator.validateCompletion, assignedTask.findByCompletion);
     router.get("/dueDate/:dueDate",  validator.validateDueDate, assignedTask.findByDueDate);
     router.get("/query/", validator.validateAssignedTaskQuery, assignedTask.findByQuery);
+    router.get("/category/:category", validator.validateAssignedTaskCategory, assignedTask.findByCategory);
     app.use('/api/assignedTask', router);
 };
