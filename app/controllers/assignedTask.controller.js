@@ -28,7 +28,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
             .then(data => {
                 res.send(data);
@@ -55,7 +55,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             if (data) {
@@ -394,7 +394,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             res.send(data);
@@ -422,7 +422,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             res.send(data);
@@ -450,7 +450,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             res.send(data);
@@ -478,7 +478,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             res.send(data);
@@ -519,7 +519,7 @@ module.exports = class AssignedTaskController {
                                     required: true
                                     }]}, {
                                 model: Person,
-                                required: true
+                                required: false
                                     }]})
         .then(data => {
             res.send(data);
@@ -552,7 +552,7 @@ module.exports = class AssignedTaskController {
                         required: true
                         }]}, {
                 model: Person,
-                required: true
+                required: false
                     }]};
         } else {
             var condition = {
@@ -571,7 +571,7 @@ module.exports = class AssignedTaskController {
                                             required: true
                                             }]}, {
                                     model: Person,
-                                    required: true
+                                    required: false
                                         }]};
         }
         AssignedTask.findAll(findBy)

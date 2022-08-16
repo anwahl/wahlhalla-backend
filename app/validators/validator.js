@@ -64,7 +64,7 @@ exports.validateTask = [
   check('typeId').notEmpty().withMessage("Type Required").isInt(),
   check('targetId').notEmpty().withMessage("Target Required").isInt(),
   check('description').notEmpty().withMessage("Description Required").trim().escape(),
-  check('value').optional({checkFalsy: true}).isInt().withMessage("Value must be a whole number."),
+  check('value').optional({checkFalsy: true}).isInt({min: 0}).withMessage("Value must be a valid whole number."),
   (req, res, next) => {
     next();
   }
@@ -86,14 +86,14 @@ exports.validateTargetType = [
 ];
 
 exports.validateAssignedTask = [
-  check('personId').notEmpty().withMessage("Person Required").isInt(),
-  check('taskId').notEmpty().withMessage("Task Required").isInt(),
-  check('type').notEmpty().isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
+  check('personId').notEmpty().optional({checkFalsy: true}).isInt().withMessage("Person ID must be a valid number."),
+  check('taskId').notEmpty().withMessage("Task Required").isInt().withMessage("Task ID must be a valid number."),
+  check('type').notEmpty().withMessage("Type is required").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
   check('timeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
   check('endTimeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
-  check('dueDate').notEmpty().toDate(),
+  check('dueDate').notEmpty().withMessage("Due Date is required.").toDate().withMessage("Due Date must be a valid date."),
   check('complete').notEmpty().isBoolean().withMessage("Complete must be true or false."),
-  check('occurrences').optional({checkFalsy: true}).isInt().withMessage("Number of Occurrences must be a number."),
+  check('occurrences').optional({checkFalsy: true}).isInt({ min: 1 }).withMessage("Number of Occurrences must be a valid number greater than 0."),
   (req, res, next) => {
     next();
   }
@@ -110,7 +110,7 @@ exports.validateAssignedTaskQuery = [
 ];
 
 exports.validateAssignedTaskType =[
-  check('type').notEmpty().isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
+  check('type').notEmpty().withMessage("Type is required.").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
   (req, res, next) => {
     next();
   }
