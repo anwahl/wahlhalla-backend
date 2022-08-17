@@ -152,14 +152,41 @@ module.exports = class TaskController {
         }
 
         const type = req.params.typeId;
-        var condition = type ? { type: { [Op.eq]: type } } : null;
-        Task.findAll([{ where: condition }, {include: [{
+        var condition = { typeId:  type };
+        Task.findAll({ where: condition, include: [{
                                             model: TaskType,
                                             required: true
                                                 }, {
                                             model: Target,
                                             required: true
-                                                }]}])
+                                                }]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving Tasks."
+            });
+        });
+    };
+
+    findByTargetAndType= (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const type = req.params.typeId;
+        const target = req.params.targetId;
+        var condition = { typeId:  type, targetId: target };
+        Task.findAll({ where: condition, include: [{
+                                            model: TaskType,
+                                            required: true
+                                                }, {
+                                            model: Target,
+                                            required: true
+                                                }]})
         .then(data => {
             res.send(data);
         })
@@ -179,13 +206,13 @@ module.exports = class TaskController {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        Task.findAll([{ where: condition }, {include: [{
+        Task.findAll({ where: condition, include: [{
                                         model: TaskType,
                                         required: true
                                             }, {
                                         model: Target,
                                         required: true
-                                            }]}])
+                                            }]})
         .then(data => {
             res.send(data);
         })
@@ -203,15 +230,15 @@ module.exports = class TaskController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const target = req.params.typeId;
-        var condition = target ? { target: { [Op.eq]: target } } : null;
-        Task.findAll([{ where: condition }, {include: [{
+        const target = req.params.targetId;
+        var condition = { targetId: target };
+        Task.findAll({ where: condition, include: [{
             model: TaskType,
             required: true
                 }, {
                     model: Target,
                     required: true
-                        }]}])
+                        }]})
         .then(data => {
             res.send(data);
         })
