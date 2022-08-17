@@ -144,6 +144,14 @@ exports.validateTargetID = [
   }
 ];
 
+exports.validateTargetAndTypeID = [
+  check('targetId').notEmpty().withMessage("Target Required").isInt().withMessage("ID Must be Numerical"),
+  check('typeId').notEmpty().withMessage("Type Required").isInt().withMessage("ID Must be Numerical"),
+  (req, res, next) => {
+    next();
+  }
+];
+
 exports.validateTaskID = [
   check('taskId').notEmpty().withMessage("Task Required").isInt().withMessage("ID Must be Numerical"),
   (req, res, next) => {
