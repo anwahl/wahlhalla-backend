@@ -12,6 +12,14 @@ module.exports = (sequelize, Sequelize) => {
          },
          allowNull: false
       }
-    });
+    },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['description', 'assignedTaskId']
+          }
+      ]
+   });
     return SubTask;
   };

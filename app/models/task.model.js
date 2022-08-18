@@ -23,6 +23,14 @@ module.exports = (sequelize, Sequelize) => {
       value: {
         type: Sequelize.INTEGER
       }
-    });
+    },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['typeId', 'targetId']
+          }
+      ]
+   });
     return Task;
   };

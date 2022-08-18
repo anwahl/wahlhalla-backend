@@ -17,6 +17,8 @@
   "author": "Annie Wahl",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^7.11.0",
+    "@sentry/tracing": "^7.11.0",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "date-and-time": "^2.4.1",
@@ -28,7 +30,9 @@
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^2.1.4",
     "mysql2": "^2.3.3",
+    "node-schedule": "^2.1.0",
     "sequelize": "^6.21.3",
+    "twilio": "^3.80.1",
     "url": "^0.11.0",
     "util": "^0.12.4"
   }

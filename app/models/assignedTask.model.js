@@ -36,6 +36,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false
       }
-    });
+    },
+    {
+      indexes: [
+          {
+              name: 'assignedTaskUK',
+              unique: true,
+              fields: ['personId', 'taskId','type','timeOfDay','endTimeOfDay','dueDate']
+          }
+      ]
+   });
     return AssignedTask;
   };
