@@ -11,6 +11,14 @@ module.exports = (sequelize, Sequelize) => {
       email: {
         type: Sequelize.STRING
       }
-    });
+    },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['firstName', 'lastName']
+          }
+      ]
+   });
     return Person;
   };

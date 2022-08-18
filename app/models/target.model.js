@@ -8,6 +8,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
          allowNull: false
       }
-    });
+    },
+    {
+      indexes: [
+          {
+              unique: true,
+              fields: ['typeId', 'description']
+          }
+      ]
+   });
     return Target;
   };
