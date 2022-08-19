@@ -71,24 +71,38 @@ module.exports = class TaskController {
         }
 
         const id = req.params.id;
-        Task.update(req.body, {
-        where: { id: id }
+        const task = req.body;
+        Task.count({
+            where: {description: task.description, typeId: task.typeId, targetId: task.targetId, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "Task was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Task already exists.'});
             } else {
-            res.send({
-                message: `Cannot update task with id=${id}. Maybe task was not found or req.body is empty!`
-            });
+                Task.update(req.body, {
+                where: { id: id }
+                })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            success: true,
+                            message: "Task was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update task with id=${id}. Maybe task was not found or req.body is empty!`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating task with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating task with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving Task. " + err });
         });
     };
         
@@ -105,6 +119,7 @@ module.exports = class TaskController {
         .then(num => {
             if (num == 1) {
             res.send({
+                success: true,
                 message: "Task was deleted successfully!"
             });
             } else {
@@ -133,15 +148,28 @@ module.exports = class TaskController {
             targetId: req.body.targetId,
             value: req.body.value
         };
-        Task.create(task)
-        .then(data => {
-        res.send(data);
+        Task.count({
+            where: {description: task.description, typeId: task.typeId, targetId: task.targetId}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Task already exists.'});
+            } else {
+                
+                Task.create(task)
+                .then(data => {
+                    res.send(data);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message:
+                        err.message || "Some error occurred while creating the Task."
+                    });
+                });
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the Task."
-        });
+            res.send({message: "Some error occurred while retrieving Tasks. " + err });
         });
     };
 

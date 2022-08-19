@@ -55,26 +55,43 @@ module.exports = class TaskTypeController {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-
         const id = req.params.id;
-        TaskType.update(req.body, {
-        where: { id: id }
+        const taskType = {
+            description: req.body.description,
+            category: req.body.category
+        };
+        TaskType.count({
+            where: {description: taskType.description, category: taskType.category, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "TaskType was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Task Type already exists.'});
             } else {
-            res.send({
-                message: `Cannot update taskType with id=${id}. Maybe taskType was not found or req.body is empty!`
-            });
+                const id = req.params.id;
+                TaskType.update(req.body, {
+                where: { id: id }
+                })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            success: true,
+                            message: "Task Type was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update taskType with id=${id}. Maybe Task Type was not found or req.body is empty!`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating Task Type with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating taskType with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving Task Type. " + err });
         });
     };
         
@@ -91,6 +108,7 @@ module.exports = class TaskTypeController {
         .then(num => {
             if (num == 1) {
             res.send({
+                success: true,
                 message: "TaskType was deleted successfully!"
             });
             } else {
@@ -117,15 +135,31 @@ module.exports = class TaskTypeController {
             description: req.body.description,
             category: req.body.category
         };
-        TaskType.create(taskType)
-        .then(data => {
-        res.send(data);
+        TaskType.count({
+            where: {description: taskType.description, category: taskType.category}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Task Type already exists.'});
+            } else {
+                const taskType = {
+                    description: req.body.description,
+                    category: req.body.category
+                };
+                TaskType.create(taskType)
+                .then(data => {
+                res.send(data);
+                })
+                .catch(err => {
+                res.status(500).send({
+                        message:
+                        err.message || "Some error occurred while creating the Task Type."
+                    });
+                });
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the TaskType."
-        });
+            res.send({message: "Some error occurred while retrieving Task Type. " + err });
         });
     };
 

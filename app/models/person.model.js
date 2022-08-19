@@ -16,7 +16,8 @@ module.exports = (sequelize, Sequelize) => {
       indexes: [
           {
               unique: true,
-              fields: ['firstName', 'lastName']
+              fields: ['firstName', 'lastName'],
+              msg: "Person already exists."
           }
       ]
    });

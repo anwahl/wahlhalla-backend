@@ -17,7 +17,7 @@ var corsOptions = {
 const PORT = process.env.PORT || 8080;
 
 const db = require("./app/models");
-db.sequelize.sync({ alter: true });
+db.sequelize.sync();
 
 app.use(cors(corsOptions))
     .use(bodyParser.json())

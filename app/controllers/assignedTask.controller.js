@@ -37,7 +37,7 @@ module.exports = class AssignedTaskController {
             .catch(err => {
             res.status(500).send({
                 message:
-                err.message || "Some error occurred while retrieving assignedTask."
+                err.message || "Some error occurred while retrieving Assigned Task."
             });
         });
     };
@@ -63,13 +63,13 @@ module.exports = class AssignedTaskController {
             res.send(data);
             } else {
             res.status(404).send({
-                message: `Cannot find assignedTask with id=${id}.`
+                message: `Cannot find Assigned Task with id=${id}.`
             });
             }
         })
         .catch(err => {
             res.status(500).send({
-            message: "Error retrieving assignedTask with id=" + id
+            message: "Error retrieving Assigned Task with id=" + id
             });
         });
     };
@@ -143,7 +143,7 @@ module.exports = class AssignedTaskController {
                         .catch(err => {
                             if (!res.headersSent) {
                                 res.status(500).send({
-                                message: "Error creating AssignedTask."
+                                message: "Error creating Assigned Task."
                             });
                             }
                     });
@@ -158,13 +158,14 @@ module.exports = class AssignedTaskController {
 
             if (!res.headersSent) {
                 res.send({
-                    message: "AssignedTask was updated successfully."
+                    success: true,
+                    message: "Assigned Task was updated successfully."
                 });
             }
             } else {
                 if (!res.headersSent) {
                     res.send({
-                        message: `Cannot update assignedTask with id=${id}. Maybe assignedTask was not found or req.body is empty!`
+                        message: `Cannot update Assigned Task with id=${id}. Maybe Assigned Task was not found or req.body is empty!`
                     });
                 }
             }
@@ -172,7 +173,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             if (!res.headersSent) {
                 res.status(500).send({
-                message: "Error updating assignedTask with id=" + id + err
+                message: "Error updating Assigned Task with id=" + id + err
                 });
             }
         });
@@ -227,13 +228,14 @@ module.exports = class AssignedTaskController {
                     }
                     if (!res.headersSent) {
                         res.send({
-                            message: "AssignedTask was updated successfully."
+                            success: true,
+                            message: "Assigned Task was updated successfully."
                         });
                     }
                 } else {
                     if (!res.headersSent) {
                         res.send({
-                            message: `Cannot update assignedTask with id=${id}. Maybe assignedTask was not found or req.body is empty!`
+                            message: `Cannot update Assigned Task with id=${id}. Maybe Assigned Task was not found or req.body is empty!`
                         });
                     }
                 }
@@ -241,7 +243,7 @@ module.exports = class AssignedTaskController {
             .catch(err => {
                 if (!res.headersSent) {
                     res.status(500).send({
-                    message: "Error updating assignedTask with id=" + id + ". " + err
+                    message: "Error updating Assigned Task with id=" + id + ". " + err
                     });
                 }
             });  
@@ -249,7 +251,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             if (!res.headersSent) {
                 res.status(500).send({
-                message: "Error finding assignedTask with id=" + id + ". " + err
+                message: "Error finding Assigned Task with id=" + id + ". " + err
                 });
             }
         });  
@@ -263,22 +265,23 @@ module.exports = class AssignedTaskController {
         
         const id = req.params.id;
         AssignedTask.destroy({
-        where: { id: id }
+            where: { id: id }
         })
         .then(num => {
             if (num == 1) {
-            res.send({
-                message: "AssignedTask was deleted successfully!"
-            });
+                res.send({
+                    success: true,
+                    message: "Assigned Task was deleted successfully!"
+                });
             } else {
-            res.send({
-                message: `Cannot delete assignedTask with id=${id}. Maybe assignedTask was not found!`
-            });
+                res.send({
+                    message: `Cannot delete Assigned Task with id=${id}. Maybe Assigned Task was not found!`
+                });
             }
         })
         .catch(err => {
             res.status(500).send({
-            message: "Could not delete assignedTask with id=" + id
+            message: "Could not delete Assigned Task with id=" + id
             });
         });
     };
@@ -306,23 +309,24 @@ module.exports = class AssignedTaskController {
             .then(num => {
                 if (num == 1) {
                 res.send({
-                    message: "AssignedTasks were deleted successfully!"
+                    success: true,
+                    message: "Assigned Tasks were deleted successfully!"
                 });
                 } else {
                 res.send({
-                    message: `Cannot delete assignedTask with id=${id}. Maybe assignedTask was not found!`
+                    message: `Cannot delete Assigned Task with id=${id}. Maybe Assigned Task was not found!`
                 });
                 }
             })
             .catch(err => {
                 res.status(500).send({
-                message: "Could not delete assignedTask with id=" + id
+                message: "Could not delete Assigned Task with id=" + id
                 });
             });
         })
         .catch(err => {
             res.status(500).send({
-            message: "Could not delete assignedTask with id=" + id
+            message: "Could not delete Assigned Task with id=" + id
             });
         })
         
@@ -386,7 +390,7 @@ module.exports = class AssignedTaskController {
                     if (!res.headersSent) {
                         res.status(500).send({
                             message:
-                            err.message || "Some error occurred while creating the AssignedTasks."
+                            err.message || "Some error occurred while creating the Assigned Tasks."
                         });
                     }
                 });
@@ -399,7 +403,7 @@ module.exports = class AssignedTaskController {
             if (!res.headersSent) {
                 res.status(500).send({
                     message:
-                    err.message || "Some error occurred while creating the AssignedTask."
+                    err.message || "Some error occurred while creating the Assigned Tasks."
                 });
             }
         });
@@ -428,7 +432,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -456,7 +460,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -484,7 +488,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -512,7 +516,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -541,7 +545,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -582,7 +586,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };
@@ -636,7 +640,7 @@ module.exports = class AssignedTaskController {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving AssignedTasks."
+                err.message || "Some error occurred while retrieving Assigned Tasks."
             });
         });
     };

@@ -59,24 +59,38 @@ module.exports = class PersonController  {
         }
 
         const id = req.params.id;
-        Person.update(req.body, {
-        where: { id: id }
+        const person = req.body;
+        Person.count({
+            where: {firstName: person.firstName, lastName: person.lastName, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "Person was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Person already exists.'});
             } else {
-            res.send({
-                message: `Cannot update person with id=${id}. Maybe person was not found or req.body is empty!`
-            });
+                Person.update(person, {
+                    where: { id: id }
+                })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            success: true,
+                            message: "Person was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update person with id=${id}. Maybe person was not found or req.body is empty!`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating person with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating person with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving person. " + err });
         });
     };
         
@@ -93,6 +107,7 @@ module.exports = class PersonController  {
         .then(num => {
             if (num == 1) {
             res.send({
+                success: true,
                 message: "Person was deleted successfully!"
             });
             } else {
@@ -119,15 +134,27 @@ module.exports = class PersonController  {
             lastName: req.body.lastName,
             email: req.body.email,
         };
-        Person.create(person)
-        .then(data => {
-            res.send(data);
+        Person.count({
+            where: {firstName: person.firstName, lastName: person.lastName}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Person already exists.'});
+            } else {
+            Person.create(person)
+            .then(data => {
+                res.send(data);
+            })
+            .catch(err => {
+                res.status(500).send({
+                        message:
+                        err.message || "Some error occurred while creating the Person."
+                    });
+                });
+            }
         })
         .catch(err => {
-            res.status(500).send({
-                message:
-                err.message || "Some error occurred while creating the Person."
-        });
+            res.send({message: "Some error occurred while retrieving person. " + err });
         });
     };
 
