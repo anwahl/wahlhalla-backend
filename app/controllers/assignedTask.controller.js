@@ -307,7 +307,7 @@ module.exports = class AssignedTaskController {
                 }
             })
             .then(num => {
-                if (num == 1) {
+                if (num > 0) {
                 res.send({
                     success: true,
                     message: "Assigned Tasks were deleted successfully!"
