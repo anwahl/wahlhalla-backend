@@ -13,7 +13,8 @@ module.exports = (sequelize, Sequelize) => {
       indexes: [
           {
               unique: true,
-              fields: ['typeId', 'description']
+              fields: ['typeId', 'description'],
+              msg: "Target already exists."
           }
       ]
    });

@@ -3,7 +3,10 @@ module.exports = (sequelize, Sequelize) => {
       description: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: {
+            name: 'uniqueTargetType',
+            msg: "Target Type already exists."
+        }
       }
     });
     return TargetType;

@@ -48,11 +48,11 @@ module.exports = class SubtaskController {
                                 }]}]})
         .then(data => {
             if (data) {
-            res.send(data);
+                res.send(data);
             } else {
-            res.status(404).send({
-                message: `Cannot find subtask with id=${id}.`
-            });
+                res.status(404).send({
+                    message: `Cannot find subtask with id=${id}.`
+                });
             }
         })
         .catch(err => {
@@ -69,24 +69,39 @@ module.exports = class SubtaskController {
         }
 
         const id = req.params.id;
-        Subtask.update(req.body, {
-        where: { id: id }
+        const subtask = {
+            description: req.body.description,
+            assignedTaskId: req.body.assignedTaskId
+        };
+        Subtask.count({
+            where: {description: subtask.description, assignedTaskId: subtask.assignedTaskId, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "Subtask was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Subtask already exists.'});
             } else {
-            res.send({
-                message: `Cannot update subtask with id=${id}. Maybe subtask was not found or req.body is empty!`
-            });
+                Subtask.update(req.body, { where: { id: id } })
+                .then(num => {
+                    if (num == 1) {
+                    res.send({
+                        success: true,
+                        message: "Subtask was updated successfully."
+                    });
+                    } else {
+                    res.send({
+                        message: `Cannot update subtask with id=${id}. Maybe subtask was not found or req.body is empty!`
+                    });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating subtask with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating subtask with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving subtask. " + err });
         });
     };
         
@@ -103,6 +118,7 @@ module.exports = class SubtaskController {
         .then(num => {
             if (num == 1) {
             res.send({
+                success: true,
                 message: "Subtask was deleted successfully!"
             });
             } else {
@@ -118,26 +134,37 @@ module.exports = class SubtaskController {
         });
     };
 
-    create = (req, res) => {
+    create = (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-
         const subtask = {
             description: req.body.description,
             assignedTaskId: req.body.assignedTaskId
         };
-        Subtask.create(subtask)
-        .then(data => {
-        res.send(data);
+        Subtask.count({
+            where: {description: subtask.description, assignedTaskId: subtask.assignedTaskId}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Subtask already exists.'});
+            } else {
+                Subtask.create(subtask)
+                .then(data => {
+                    res.send(data);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: err.message || "Some error occurred while creating the Subtask."
+                    });
+                });
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the Subtask."
+            res.send({message: "Some error occurred while retrieving subtask. " + err });
         });
-        });
+       
     };
 
     findByAssignedTask= (req, res) => {
@@ -157,7 +184,7 @@ module.exports = class SubtaskController {
         .then(data => {
             res.send(data);
         })
-        .catch(err => {
+        .catch(err => { 
             res.status(500).send({
             message:
                 err.message || "Some error occurred while retrieving Subtask."

@@ -2,7 +2,11 @@ module.exports = (sequelize, Sequelize) => {
     const SubTask = sequelize.define("subtask", {
       description: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: {
+          name: 'uniqueSubtask',
+          msg: 'Subtask Already Exists.'
+        }
       },
       assignedTaskId: {
         type: Sequelize.INTEGER,
@@ -10,16 +14,12 @@ module.exports = (sequelize, Sequelize) => {
             model: 'assignedTasks',
             key: 'id',
          },
-         allowNull: false
+         allowNull: false,
+         unique: {
+           name: 'uniqueSubtask',
+           msg: 'Subtask Already Exists.'
+         }
       }
-    },
-    {
-      indexes: [
-          {
-              unique: true,
-              fields: ['description', 'assignedTaskId']
-          }
-      ]
-   });
+    });
     return SubTask;
   };

@@ -22,7 +22,7 @@ module.exports = class TargetTypeController  {
             .catch(err => {
             res.status(500).send({
                 message:
-                err.message || "Some error occurred while retrieving targetType."
+                err.message || "Some error occurred while retrieving Target Type."
             });
         });
     };
@@ -40,13 +40,13 @@ module.exports = class TargetTypeController  {
             res.send(data);
             } else {
             res.status(404).send({
-                message: `Cannot find targetType with id=${id}.`
+                message: `Cannot find Target Type with id=${id}.`
             });
             }
         })
         .catch(err => {
             res.status(500).send({
-            message: "Error retrieving targetType with id=" + id
+            message: "Error retrieving Target Type with id=" + id
             });
         });
     };
@@ -58,24 +58,40 @@ module.exports = class TargetTypeController  {
         }
 
         const id = req.params.id;
-        TargetType.update(req.body, {
-        where: { id: id }
+        const targetType = {
+            description: req.body.description
+        };
+        TargetType.count({
+            where: {description: targetType.description, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "TargetType was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Target Type already exists.'});
             } else {
-            res.send({
-                message: `Cannot update targetType with id=${id}. Maybe targetType was not found or req.body is empty!`
-            });
+                TargetType.update(req.body, {
+                where: { id: id }
+                })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            success: true,
+                            message: "Target Type was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update Target Type with id=${id}. Maybe Target Type was not found or req.body is empty!`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating Target Type with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating targetType with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving Target Type. " + err });
         });
     };
         
@@ -92,17 +108,18 @@ module.exports = class TargetTypeController  {
         .then(num => {
             if (num == 1) {
             res.send({
-                message: "TargetType was deleted successfully!"
+                success: true,
+                message: "Target Type was deleted successfully!"
             });
             } else {
             res.send({
-                message: `Cannot delete targetType with id=${id}. Maybe targetType was not found!`
+                message: `Cannot delete Target Type with id=${id}. Maybe Target Type was not found!`
             });
             }
         })
         .catch(err => {
             res.status(500).send({
-            message: "Could not delete targetType with id=" + id
+            message: "Could not delete Target Type with id=" + id
             });
         });
     };
@@ -116,15 +133,27 @@ module.exports = class TargetTypeController  {
         const targetType = {
             description: req.body.description
         };
-        TargetType.create(targetType)
-        .then(data => {
-        res.send(data);
+        TargetType.count({
+            where: {description: targetType.description}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Target Type already exists.'});
+            } else {
+                TargetType.create(targetType)
+                .then(data => {
+                res.send(data);
+                })
+                .catch(err => {
+                res.status(500).send({
+                        message:
+                        err.message || "Some error occurred while creating the Target Type."
+                    });
+                });
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the TargetType."
-        });
+            res.send({message: "Some error occurred while retrieving Target Type. " + err });
         });
     };
 
@@ -143,7 +172,7 @@ module.exports = class TargetTypeController  {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving TargetType."
+                err.message || "Some error occurred while retrieving Target Type."
             });
         });
     };

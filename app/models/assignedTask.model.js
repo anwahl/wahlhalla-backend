@@ -42,7 +42,8 @@ module.exports = (sequelize, Sequelize) => {
           {
               name: 'assignedTaskUK',
               unique: true,
-              fields: ['personId', 'taskId','type','timeOfDay','endTimeOfDay','dueDate']
+              fields: ['personId', 'taskId','type','timeOfDay','endTimeOfDay','dueDate'],
+              msg: 'Assigned Task already exists.'
           }
       ]
    });

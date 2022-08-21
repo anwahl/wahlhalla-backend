@@ -28,7 +28,8 @@ module.exports = (sequelize, Sequelize) => {
       indexes: [
           {
               unique: true,
-              fields: ['typeId', 'targetId']
+              fields: ['description', 'typeId', 'targetId'],
+              msg: "Task already exists."
           }
       ]
    });

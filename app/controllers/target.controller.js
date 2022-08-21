@@ -64,24 +64,38 @@ module.exports = class TargetController {
         }
 
         const id = req.params.id;
-        Target.update(req.body, {
-        where: { id: id }
+        const target = req.body;
+        Target.count({
+            where: {description: target.description, typeId: target.typeId, id: {[Op.ne]: id}}
         })
         .then(num => {
-            if (num == 1) {
-            res.send({
-                message: "Target was updated successfully."
-            });
+            if (num> 0) {
+                res.send({message: 'Target already exists.'});
             } else {
-            res.send({
-                message: `Cannot update target with id=${id}. Maybe target was not found or req.body is empty!`
-            });
+                Target.update(target, {
+                where: { id: id }
+                })
+                .then(num => {
+                    if (num == 1) {
+                        res.send({
+                            success: true,
+                            message: "Target was updated successfully."
+                        });
+                    } else {
+                        res.send({
+                            message: `Cannot update target with id=${id}. Maybe target was not found or req.body is empty!`
+                        });
+                    }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                    message: "Error updating target with id=" + id
+                    });
+                });
             }
         })
         .catch(err => {
-            res.status(500).send({
-            message: "Error updating target with id=" + id
-            });
+            res.send({message: "Some error occurred while retrieving Target. " + err });
         });
     };
         
@@ -98,6 +112,7 @@ module.exports = class TargetController {
         .then(num => {
             if (num == 1) {
             res.send({
+                success: true,
                 message: "Target was deleted successfully!"
             });
             } else {
@@ -123,15 +138,27 @@ module.exports = class TargetController {
             description: req.body.description,
             typeId: req.body.typeId
         };
-        Target.create(target)
-        .then(data => {
-        res.send(data);
+        Target.count({
+            where: {description: target.description, typeId: target.typeId}
+        })
+        .then(num => {
+            if (num> 0) {
+                res.send({message: 'Target already exists.'});
+            } else {
+                Target.create(target)
+                .then(data => {
+                res.send(data);
+                })
+                .catch(err => {
+                res.status(500).send({
+                        message:
+                        err.message || "Some error occurred while creating the Target."
+                    });
+                });
+            }
         })
         .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the Target."
-        });
+            res.send({message: "Some error occurred while retrieving Target. " + err });
         });
     };
 
