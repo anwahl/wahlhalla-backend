@@ -21,7 +21,7 @@ module.exports = class SubtaskController {
                             required: true, include: [{
                                 model: Task,
                                 required: true
-                                }]}]})
+                                }]}], order: [ [ 'createdAt', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -180,7 +180,7 @@ module.exports = class SubtaskController {
                             required: true, include: [{
                                 model: Task,
                                 required: true
-                                }]}]})
+                                }]}], order: [ [ 'createdAt', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -205,7 +205,7 @@ module.exports = class SubtaskController {
                             required: true, include: [{
                                 model: Task,
                                 required: true
-                                }]}]})
+                                }]}], order: [ [ 'createdAt', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -231,7 +231,7 @@ module.exports = class SubtaskController {
                             required: true, include: [{
                                 model: Task,
                                 required: true
-                                }]}]})
+                                }]}], order: [ [ 'createdAt', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })

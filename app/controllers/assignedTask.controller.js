@@ -30,7 +30,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }],
+                                    order: [ [ 'dueDate', 'DESC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -445,7 +446,7 @@ module.exports = class AssignedTaskController {
 
         const person = req.params.person;
         var type = person ? { type: { [Op.eq]: type } } : null;
-        AssignedTask.findAll({ where: condition }, {include: [{
+        AssignedTask.findAll({ where: condition, include: [{
                                 model: Task,
                                 required: true, include: [{
                                     model: Target,
@@ -453,7 +454,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }], 
+                                    order: [ [ 'dueDate', 'DESC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -473,7 +475,7 @@ module.exports = class AssignedTaskController {
 
         const complete = req.params.complete;
         var condition = complete ? { complete: { [Op.eq]: complete } } : null;
-        AssignedTask.findAll({ where: condition }, {include: [{
+        AssignedTask.findAll({ where: condition, include: [{
                                 model: Task,
                                 required: true, include: [{
                                     model: Target,
@@ -481,7 +483,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }], 
+                                    order: [ [ 'dueDate', 'DESC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -509,7 +512,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }], 
+                                    order: [ [ 'dueDate', 'DESC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -538,7 +542,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }],
+                                    order: [ [ 'dueDate', 'DESC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -571,7 +576,7 @@ module.exports = class AssignedTaskController {
             ]
         };
 
-        AssignedTask.findAll({ where: condition }, {include: [{
+        AssignedTask.findAll({ where: condition, include: [{
                                 model: Task,
                                 required: true, include: [{
                                     model: Target,
@@ -579,7 +584,8 @@ module.exports = class AssignedTaskController {
                                     }]}, {
                                 model: Person,
                                 required: false
-                                    }]})
+                                    }],
+                                    order: [ [ 'dueDate', 'DESC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -631,7 +637,8 @@ module.exports = class AssignedTaskController {
                                             }]}, {
                                     model: Person,
                                     required: false
-                                        }]};
+                                        }],
+                                        order: [ [ 'dueDate', 'DESC' ]]};
         }
         AssignedTask.findAll(findBy)
         .then(data => {

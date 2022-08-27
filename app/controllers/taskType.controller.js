@@ -14,7 +14,7 @@ module.exports = class TaskTypeController {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        TaskType.findAll()
+        TaskType.findAll({order: [ [ 'description', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -171,7 +171,7 @@ module.exports = class TaskTypeController {
 
         const category = req.params.category;
         var condition = category ? { category: { [Op.eq]: category } } : null;
-        TaskType.findAll({ where: condition })
+        TaskType.findAll({ where: condition, order: [ [ 'description', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })
@@ -191,7 +191,7 @@ module.exports = class TaskTypeController {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        TaskType.findAll({ where: condition })
+        TaskType.findAll({ where: condition, order: [ [ 'description', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })

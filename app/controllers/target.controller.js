@@ -18,7 +18,8 @@ module.exports = class TargetController {
         Target.findAll({ include: {
                     model: TargetType,
                     required: true, 
-                }})
+                },
+                order: [ [ 'description', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -170,7 +171,8 @@ module.exports = class TargetController {
 
         const typeId = req.params.typeId;
         var condition = typeId ? { typeId: typeId } : null;
-        Target.findAll({ where: condition })
+        Target.findAll({ where: condition,
+            order: [ [ 'description', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })
@@ -190,7 +192,8 @@ module.exports = class TargetController {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        Target.findAll({ where: condition })
+        Target.findAll({ where: condition,
+            order: [ [ 'description', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })

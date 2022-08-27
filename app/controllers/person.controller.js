@@ -16,7 +16,7 @@ module.exports = class PersonController  {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        Person.findAll()
+        Person.findAll({order: [ [ 'lastName', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -169,7 +169,7 @@ module.exports = class PersonController  {
                         Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('firstName')), 'LIKE', `%${name}%`),
                         Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('lastName')), 'LIKE', `%${name}%`),
                     ] } } : null;
-        Person.findAll({ where: condition })
+        Person.findAll({ where: condition, order: [ [ 'lastName', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })
