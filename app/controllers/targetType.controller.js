@@ -15,7 +15,8 @@ module.exports = class TargetTypeController  {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        TargetType.findAll()
+        TargetType.findAll({
+            order: [ [ 'description', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -165,7 +166,8 @@ module.exports = class TargetTypeController  {
 
         const description = req.params.description;
         var condition = description ? { description: { [Op.like]: `%${description}%` } } : null;
-        TargetType.findAll({ where: condition })
+        TargetType.findAll({ where: condition,
+            order: [ [ 'description', 'ASC' ]] })
         .then(data => {
             res.send(data);
         })

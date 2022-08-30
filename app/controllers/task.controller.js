@@ -22,7 +22,8 @@ module.exports = class TaskController {
                             }, {
                         model: Target,
                         required: true
-                            }]})
+                            }],
+            order: [ [ 'description', 'ASC' ]]})
             .then(data => {
                 res.send(data);
             })
@@ -187,7 +188,8 @@ module.exports = class TaskController {
                                                 }, {
                                             model: Target,
                                             required: true
-                                                }]})
+                                                }],
+                                                order: [ [ 'description', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -214,7 +216,8 @@ module.exports = class TaskController {
                                                 }, {
                                             model: Target,
                                             required: true
-                                                }]})
+                                                }],
+                                                order: [ [ 'description', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -240,7 +243,8 @@ module.exports = class TaskController {
                                             }, {
                                         model: Target,
                                         required: true
-                                            }]})
+                                            }],
+                                            order: [ [ 'description', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
@@ -266,7 +270,8 @@ module.exports = class TaskController {
                 }, {
                     model: Target,
                     required: true
-                        }]})
+                        }],
+                        order: [ [ 'description', 'ASC' ]]})
         .then(data => {
             res.send(data);
         })
