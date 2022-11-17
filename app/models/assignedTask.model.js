@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
          allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'),
+        type: Sequelize.ENUM('DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'),
         allowNull: false
       },
       timeOfDay: {
