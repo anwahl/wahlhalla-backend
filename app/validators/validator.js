@@ -88,7 +88,7 @@ exports.validateTargetType = [
 exports.validateAssignedTask = [
   check('personId').notEmpty().optional({checkFalsy: true}).isInt().withMessage("Person ID must be a valid number."),
   check('taskId').notEmpty().withMessage("Task Required").isInt().withMessage("Task ID must be a valid number."),
-  check('type').notEmpty().withMessage("Type is required").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
+  check('type').notEmpty().withMessage("Type is required").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE','BIWEEKLY']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','BIWEEKLY','DAILY', or 'STANDALONE'"),
   check('timeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
   check('endTimeOfDay').optional({checkFalsy: true}).matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage("Time must be valid hh:mm format."),
   check('dueDate').notEmpty().withMessage("Due Date is required.").toDate().withMessage("Due Date must be a valid date."),
@@ -101,7 +101,7 @@ exports.validateAssignedTask = [
 
 exports.validateAssignedTaskQuery = [
   check('person').optional({checkFalsy: true}).isInt(),
-  check('typeId').optional({checkFalsy: true}).isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
+  check('typeId').optional({checkFalsy: true}).isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE','BIWEEKLY']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','BIWEEKLY,'DAILY', or 'STANDALONE'"),
   check('dueDate').optional({checkFalsy: true}).toDate(),
   check('complete').optional({checkFalsy: true}).isBoolean().withMessage("Complete must be true or false."),
   (req, res, next) => {
@@ -110,7 +110,7 @@ exports.validateAssignedTaskQuery = [
 ];
 
 exports.validateAssignedTaskType =[
-  check('type').notEmpty().withMessage("Type is required.").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','DAILY', or 'STANDALONE'"),
+  check('type').notEmpty().withMessage("Type is required.").isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE','BIWEEKLY']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','BIWEEKLY','DAILY', or 'STANDALONE'"),
   (req, res, next) => {
     next();
   }

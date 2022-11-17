@@ -120,6 +120,8 @@ module.exports = class AssignedTaskController {
                             newDate = dateFunc.addHours(dateFunc.addDays(new Date(data[0]['dataValues'].dueDate), 1), 6);
                         } else if (req.body.type == 'WEEKLY') {
                             newDate = dateFunc.addHours(dateFunc.addDays(new Date(data[0]['dataValues'].dueDate), 7), 6);
+                        } else if (req.body.type == 'BIWEEKLY') {
+                            newDate = dateFunc.addHours(dateFunc.addDays(new Date(data[0]['dataValues'].dueDate), 14), 6);
                         } else if (req.body.type == 'MONTHLY') {
                             newDate = dateFunc.addHours(dateFunc.addMonths(new Date(data[0]['dataValues'].dueDate), 1), 6);
                         } else if (req.body.type == 'YEARLY') {
@@ -364,6 +366,8 @@ module.exports = class AssignedTaskController {
                         newDate = dateFunc.addHours(dateFunc.addDays(new Date(data.dueDate), (1 * i)), 6);
                     } else if (data.type == 'WEEKLY') {
                         newDate = dateFunc.addHours(dateFunc.addDays(new Date(data.dueDate), (7 * i)), 6);
+                    } else if (req.body.type == 'BIWEEKLY') {
+                        newDate = dateFunc.addHours(dateFunc.addDays(new Date(data.dueDate), (14 * i)), 6);
                     } else if (data.type == 'MONTHLY') {
                         newDate = dateFunc.addHours(dateFunc.addMonths(new Date(data.dueDate), 1 * i), 6);
                     } else if (data.type == 'YEARLY') {

@@ -17,6 +17,7 @@ var corsOptions = {
 const PORT = process.env.PORT || 8080;
 
 const db = require("./app/models");
+const { Op } = require('sequelize');
 db.sequelize.sync();
 
 app.use(cors(corsOptions))
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
   }
 
 if (process.env.NODE_ENV === 'production') {
-    const job = schedule.scheduleJob('30 13 * * *', function(){
+    const job = schedule.scheduleJob('30 14 * * *', function(){
         const AssignedTask = db.assignedTasks;
         const Task = db.tasks;
         const Target = db.targets;
@@ -72,7 +73,7 @@ if (process.env.NODE_ENV === 'production') {
 
         const dueDate = new Date();
         const complete = 0;
-        var condition = { dueDate: dueDate, complete: complete };
+        var condition = { dueDate: {[Op.or]: {[Op.lt]: dueDate, [Op.eq]: dueDate}}, complete: complete };
         AssignedTask.findAll({ where: condition, include: [{
                                 model: Task,
                                 required: true, include: [{
@@ -103,7 +104,7 @@ if (process.env.NODE_ENV === 'production') {
                   }).then(message => console.log(message.body));
                 });
               } else {
-                let message = "No tasks today. Enjoy yor day!"
+                let message = "No tasks today. Enjoy your day!"
                 process.env.TO_NUMBER.split(',').forEach(num => {
                   twilio.messages.create({
                     body: message,
@@ -117,7 +118,7 @@ if (process.env.NODE_ENV === 'production') {
             console.log(err);
             process.env.TO_NUMBER.split(',').forEach(num => {
                 twilio.messages.create({
-                  body: "Error retrieving today's due tasks. Error: " + err,
+                  body: "Error retrieving todays due tasks. Error: " + err,
                   from: process.env.FROM_NUMBER,
                   to: num
                 }).then(message => console.log(message.body));
