@@ -11,6 +11,8 @@ const schedule = require('node-schedule');
 const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
+const { SendMailClient } = require("zeptomail");
+let client = new SendMailClient({url: process.env.ZEPTOMAIL_URL, token: "Zoho-enczapikey " + process.env.ZEPTOMAIL_TOKEN});
 var corsOptions = {
   origin: "*"
 };
@@ -94,25 +96,49 @@ if (process.env.NODE_ENV === 'production') {
               } else {
                   due.push(`${data.task.taskType.category} : ${data.timeOfDay ? '(' + data.timeOfDay + ')' : ''} ${data.task.description} => ${data.target.description}`);
               }
+              let message = "message";
               if (due != null && due != undefined && due != '') {
-                let message = `From Wahlhalla, due today:\r\n${Array.isArray(due) ? due.join('\r\n') : due}`;
-                process.env.TO_NUMBER.split(',').forEach(num => {
+                message = `From Wahlhalla, due today:<br/>${Array.isArray(due) ? due.join('<br/>') : due}`;
+                /*process.env.TO_NUMBER.split(',').forEach(num => {
                   twilio.messages.create({
                     body: message,
                     from: process.env.FROM_NUMBER,
                     to: num
                   }).then(message => console.log(message.body));
-                });
+                });*/
               } else {
-                let message = "No tasks today. Enjoy your day!"
-                process.env.TO_NUMBER.split(',').forEach(num => {
+                message = "No tasks today. Enjoy your day!"
+                /*process.env.TO_NUMBER.split(',').forEach(num => {
                   twilio.messages.create({
                     body: message,
                     from: process.env.FROM_NUMBER,
                     to: num
                   }).then(message => console.log(message.body));
-                });
+                });*/
               }
+              console.log(process.env.TO_ADDRESS + " + " + process.env.TO_NUMBER + " + " + process.env.ZEPTOMAIL_URL);
+              process.env.TO_ADDRESS.split(',').forEach(address => {
+                client.sendMail({
+                    "bounce_address": process.env.BOUNCE_ADDRESS,
+                    "from": 
+                    {
+                        "address": process.env.FROM_ADDRESS,
+                        "name": "Wahlhalla"
+                    },
+                    "to": 
+                    [
+                        {
+                        "email_address": 
+                            {
+                                "address": address,
+                                "name": address
+                            }
+                        }
+                    ],
+                    "subject": "Test Email",
+                    "htmlbody": "<div><b>" + message + "</b></div>",
+                }).then((resp) => console.log("success:" + message)).catch((error) => console.log("error : " + error));
+              });
         })
         .catch(err => {
             console.log(err);
