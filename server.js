@@ -135,7 +135,7 @@ if (process.env.NODE_ENV === 'production') {
                             }
                         }
                     ],
-                    "subject": "Test Email",
+                    "subject": "Tasks Due Today",
                     "htmlbody": "<div><b>" + message + "</b></div>",
                 }).then((resp) => console.log("success:" + message)).catch((error) => console.log("error : " + error));
               });
