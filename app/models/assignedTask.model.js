@@ -1,3 +1,16 @@
+/**
+ * An Assigned Task
+ * @typedef {object} AssignedTask
+ * @property {integer} personId - ID of the Person assigned to the Assigned Task.
+ * @property {integer} taskId.required - ID of the Task of the Assigned Task.
+ * @property {string} type.required - Type of schedule for the Assigned Task (DAILY, WEEKLY, BIWEEKLY, MONTHLY, YEARLY, STANDALONE).
+ * @property {string} timeOfDay - Start time for the Assigned Task.
+ * @property {string} endTimeOfDay - End time for the Assigned Task.
+ * @property {string} dueDate.required - Due date of the Assigned Task.
+ * @property {integer} occurrences - Number of Occurrences of the Assigned Task.
+ * @property {boolean} complete.required - If the Assigned Task is complete.
+ */
+
 module.exports = (sequelize, Sequelize) => {
     const AssignedTask = sequelize.define("assignedTask", {
       personId: {

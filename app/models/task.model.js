@@ -1,3 +1,12 @@
+/**
+ * A Task
+ * @typedef {object} Task
+ * @property {string} description.required - Description of the Task
+ * @property {integer} typeId.required - ID of the Task Type
+ * @property {integer} targetId.required - ID of the Target
+ * @property {integer} value - Value of the task
+ */
+
 module.exports = (sequelize, Sequelize) => {
     const Task = sequelize.define("task", {
       description: {

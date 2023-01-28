@@ -1,4 +1,6 @@
-
+/**
+ * @module controllers/AssignedTask
+ */
 const { validationResult } = require('express-validator');
 const dateFunc = require('date-and-time');
 const db = require("../models");
@@ -9,13 +11,28 @@ const Person = db.persons;
 const AssignedTask = db.assignedTasks;
 const Op = db.Sequelize.Op;
 const url = require('url');
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 
+/**
+ * Assigned Task Controller
+ * @summary Assigned Task Controller
+ */
 module.exports = class AssignedTaskController {
+
+    /**
+     * Constructor for Assigned Task Controller
+     * @constructor Constructor for Assigned Task Controller
+     */
     constructor() {
 
      }
 
+     /**
+      * Finds All Assigned Tasks
+      * @summary Returns a list of all Assigned Tasks
+      * @return {object} 200 - Success - All Assigned Tasks
+      * @return {json} 400 - Error
+      * @return {string} 500 - Error
+      */
      findAll = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -86,21 +103,6 @@ module.exports = class AssignedTaskController {
         where: { id: id }  })
         .then(num => {
             if (num == 1) {
-                if (req.body.complete) {
-                    if (process.env.NODE_ENV === 'production') {
-                        let date = new Date();
-                        let time = (date.getHours() < 16 ? '0' : '') + (date.getHours() - 6) + ':' + (date.getMinutes() < 10 ? '0' : '') + (date.getMinutes());
-                        date = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? (date.getDate()) : ('0' + (date.getDate()))) + '/' + date.getFullYear();
-                        var message = `"${req.body.task.description}" has been marked complete on ${date} at ${time}.`;
-                        process.env.TO_NUMBER.split(',').forEach(num => {
-                            twilio.messages.create({
-                            body: message,
-                            from: process.env.FROM_NUMBER,
-                            to: num
-                            }).then(message => console.log(message.body));
-                        });
-                    }
-                }
                 if (req.body.complete == true && req.body.type != 'STANDALONE' && (req.body.occurrences == 0 || req.body.occurrences == null)) {
                     AssignedTask.findAll({
                         limit: 1,
@@ -213,22 +215,6 @@ module.exports = class AssignedTaskController {
             })
             .then(num => {
                 if (num >= 1) {
-                    if (req.body.complete) {
-                        if (process.env.NODE_ENV === 'production') {
-                            let date = new Date();
-                            let time = (date.getHours() < 16 ? '0' : '') + (date.getHours() - 6) + ':' + (date.getMinutes() < 10 ? '0' : '') + (date.getMinutes());
-                            date = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? (date.getDate()) : ('0' + (date.getDate()))) + '/' + date.getFullYear();
-                            var message = `The "${req.body.task.description}" series has been marked complete on ${date} at ${time}.`;
-                            
-                            process.env.TO_NUMBER.split(',').forEach(num => {
-                                twilio.messages.create({
-                                body: message,
-                                from: process.env.FROM_NUMBER,
-                                to: num
-                                }).then(message => console.log(message.body));
-                            });
-                        }
-                    }
                     if (!res.headersSent) {
                         res.send({
                             success: true,
@@ -418,7 +404,7 @@ module.exports = class AssignedTaskController {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).jsonf({ errors: errors.array() });
-        }7
+        }
 
         const person = req.params.person;
         var condition = person ? { person: { [Op.eq]: person } } : null;

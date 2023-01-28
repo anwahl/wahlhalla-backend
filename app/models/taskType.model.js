@@ -1,3 +1,10 @@
+/**
+ * A Task Type
+ * @typedef {object} TaskType
+ * @property {string} description.required - Description of the Task Type
+ * @property {string} category.required - Category of the Task Type (CHORE, BILL, APPOINTMENT, LIST, OTHER)
+ */
+
 module.exports = (sequelize, Sequelize) => {
     const TaskType = sequelize.define("taskType", {
       description: {

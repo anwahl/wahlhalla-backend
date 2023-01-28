@@ -1,3 +1,6 @@
+/**
+ * @module server
+ */
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -9,7 +12,6 @@ const app = express();
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
 const schedule = require('node-schedule');
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 const { SendMailClient } = require("zeptomail");
@@ -21,23 +23,18 @@ const PORT = process.env.PORT || 8080;
 
 const options = {
   info: {
-    version: '1.0.0',
+    version: '0.0.1',
+    description: 'Task Tracking API',
     title: 'Wahlhalla',
     license: {
       name: 'MIT',
-    },
-  },
-  security: {
-    BasicAuth: {
-      type: 'http',
-      scheme: 'basic',
     },
   },
   baseDir: __dirname,
   filesPattern: './**/*.js',
   swaggerUIPath: '/api-docs',
   exposeSwaggerUI: true,
-  exposeApiDocs: false,
+  exposeApiDocs: true,
   apiDocsPath: '/v1/api-docs',
   notRequiredAsNullable: false,
   swaggerUiOptions: {},
@@ -91,7 +88,10 @@ if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.tracingHandler());
     app.use(Sentry.Handlers.errorHandler());
   }
-
+  
+/**
+ * @summary Emails the defined addresses daily at 7:30 am the tasks of the day using Zeptomail.
+ */
 if (process.env.NODE_ENV === 'production') {
     const job = schedule.scheduleJob('30 14 * * *', function(){
         const AssignedTask = db.assignedTasks;
@@ -126,22 +126,8 @@ if (process.env.NODE_ENV === 'production') {
               let message = "message";
               if (due != null && due != undefined && due != '') {
                 message = `From Wahlhalla, due today:<br/>${Array.isArray(due) ? due.join('<br/>') : due}`;
-                /*process.env.TO_NUMBER.split(',').forEach(num => {
-                  twilio.messages.create({
-                    body: message,
-                    from: process.env.FROM_NUMBER,
-                    to: num
-                  }).then(message => console.log(message.body));
-                });*/
               } else {
                 message = "No tasks today. Enjoy your day!"
-                /*process.env.TO_NUMBER.split(',').forEach(num => {
-                  twilio.messages.create({
-                    body: message,
-                    from: process.env.FROM_NUMBER,
-                    to: num
-                  }).then(message => console.log(message.body));
-                });*/
               }
               console.log(process.env.TO_ADDRESS + " + " + process.env.TO_NUMBER + " + " + process.env.ZEPTOMAIL_URL);
               process.env.TO_ADDRESS.split(',').forEach(address => {
@@ -180,7 +166,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-  
+
 
 
 

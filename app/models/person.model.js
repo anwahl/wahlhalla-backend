@@ -1,3 +1,11 @@
+/**
+ * A Person
+ * @typedef {object} Person
+ * @property {string} firstName.required - First Name
+ * @property {string} lastName.required - Last Name
+ * @property {string} email - email
+ */
+
 module.exports = (sequelize, Sequelize) => {
     const Person = sequelize.define("person", {
       firstName: {

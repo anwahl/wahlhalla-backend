@@ -1,3 +1,9 @@
+/**
+ * A Target Type
+ * @typedef {object} Target Type
+ * @property {string} description.required - Description of the Target Type
+ */
+
 module.exports = (sequelize, Sequelize) => {
     const TargetType = sequelize.define("targetType", {
       description: {

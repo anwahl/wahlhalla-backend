@@ -4,6 +4,13 @@ module.exports = app => {
     var router = require("express").Router();
     var assignedTask = new AssignedTask();
 
+    /**
+      * Finds All Assigned Tasks
+      * @summary Returns a list of all Assigned Tasks
+      * @return {object} 200 - Success - All Assigned Tasks
+      * @return {json} 400 - Error
+      * @return {string} 500 - Error
+      */
     router.get("/", assignedTask.findAll);
     router.post("/",  validator.validateAssignedTask, assignedTask.create);
     router.get("/:id", validator.validateID, assignedTask.findOne);
