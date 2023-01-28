@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const express = require("express");
+const expressJSDocSwagger = require('express-jsdoc-swagger');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
@@ -18,6 +19,31 @@ var corsOptions = {
 };
 const PORT = process.env.PORT || 8080;
 
+const options = {
+  info: {
+    version: '1.0.0',
+    title: 'Wahlhalla',
+    license: {
+      name: 'MIT',
+    },
+  },
+  security: {
+    BasicAuth: {
+      type: 'http',
+      scheme: 'basic',
+    },
+  },
+  baseDir: __dirname,
+  filesPattern: './**/*.js',
+  swaggerUIPath: '/api-docs',
+  exposeSwaggerUI: true,
+  exposeApiDocs: false,
+  apiDocsPath: '/v1/api-docs',
+  notRequiredAsNullable: false,
+  swaggerUiOptions: {},
+  multiple: true,
+};
+
 const db = require("./app/models");
 const { Op } = require('sequelize');
 db.sequelize.sync();
@@ -32,6 +58,7 @@ app.use(cors(corsOptions))
         console.log(`Server is running on port ${PORT}.`)
     });
 
+expressJSDocSwagger(app)(options);
 
 if (process.env.NODE_ENV === 'production') {
     var jwtCheck = jwt({
