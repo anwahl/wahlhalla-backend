@@ -1,0 +1,23 @@
+name: Wahlhalla
+on:
+  push:
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: document
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./
+          recurse: true
+          output_dir: ./out
+          template: docdash
+          front_page: README.md
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation
+          path: ./out
