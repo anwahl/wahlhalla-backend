@@ -9,7 +9,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3.3.0
       - name: document
-        uses: andstor/jsdoc-action@v1
+        uses: andstor/jsdoc-action@v1.2.1
         with:
           source_dir: ./
           recurse: true
