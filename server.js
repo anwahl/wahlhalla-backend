@@ -22,6 +22,8 @@ const db = require("./app/models");
 const { Op } = require('sequelize');
 db.sequelize.sync();
 
+/**
+* Test comment. */
 app.use(cors(corsOptions))
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
