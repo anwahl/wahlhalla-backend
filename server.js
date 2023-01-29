@@ -2,13 +2,14 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const express = require("express");
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const { expressjwt: jwt } = require('express-jwt');
 const jwks = require('jwks-rsa');
 const schedule = require('node-schedule');
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
 const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 const { SendMailClient } = require("zeptomail");
@@ -17,6 +18,21 @@ var corsOptions = {
   origin: "*"
 };
 const PORT = process.env.PORT || 8080;
+
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Wahlhalla: Task Tracking API',
+    version: '0.0.1',
+  },
+};
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./app/**/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
 
 const db = require("./app/models");
 const { Op } = require('sequelize');
@@ -33,6 +49,7 @@ app.use(cors(corsOptions))
         console.log(`Server is running on port ${PORT}.`)
     });
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 if (process.env.NODE_ENV === 'production') {
     var jwtCheck = jwt({
@@ -65,7 +82,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.tracingHandler());
     app.use(Sentry.Handlers.errorHandler());
   }
-
+  
 if (process.env.NODE_ENV === 'production') {
     const job = schedule.scheduleJob('30 14 * * *', function(){
         const AssignedTask = db.assignedTasks;
@@ -100,22 +117,8 @@ if (process.env.NODE_ENV === 'production') {
               let message = "message";
               if (due != null && due != undefined && due != '') {
                 message = `From Wahlhalla, due today:<br/>${Array.isArray(due) ? due.join('<br/>') : due}`;
-                /*process.env.TO_NUMBER.split(',').forEach(num => {
-                  twilio.messages.create({
-                    body: message,
-                    from: process.env.FROM_NUMBER,
-                    to: num
-                  }).then(message => console.log(message.body));
-                });*/
               } else {
                 message = "No tasks today. Enjoy your day!"
-                /*process.env.TO_NUMBER.split(',').forEach(num => {
-                  twilio.messages.create({
-                    body: message,
-                    from: process.env.FROM_NUMBER,
-                    to: num
-                  }).then(message => console.log(message.body));
-                });*/
               }
               console.log(process.env.TO_ADDRESS + " + " + process.env.TO_NUMBER + " + " + process.env.ZEPTOMAIL_URL);
               process.env.TO_ADDRESS.split(',').forEach(address => {
@@ -153,10 +156,6 @@ if (process.env.NODE_ENV === 'production') {
         });
     });
 }
-
-  
-
-
 
 require("./app/routes/assignedTask.routes")(app);
 require("./app/routes/person.routes")(app);
