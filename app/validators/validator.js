@@ -100,8 +100,8 @@ exports.validateAssignedTask = [
 ];
 
 exports.validateAssignedTaskQuery = [
-  check('person').optional({checkFalsy: true}).isInt(),
-  check('typeId').optional({checkFalsy: true}).isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE','BIWEEKLY']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','BIWEEKLY,'DAILY', or 'STANDALONE'"),
+  check('personId').optional({checkFalsy: true}).isInt(),
+  check('type').optional({checkFalsy: true}).isIn(['YEARLY','MONTHLY','WEEKLY','DAILY','STANDALONE','BIWEEKLY']).withMessage("Type must be 'YEARLY','MONTHLY','WEEKLY','BIWEEKLY,'DAILY', or 'STANDALONE'"),
   check('dueDate').optional({checkFalsy: true}).toDate(),
   check('complete').optional({checkFalsy: true}).isBoolean().withMessage("Complete must be true or false."),
   (req, res, next) => {

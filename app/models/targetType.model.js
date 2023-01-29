@@ -1,7 +1,16 @@
 /**
- * A Target Type
- * @typedef {object} Target Type
- * @property {string} description.required - Description of the Target Type
+ * @swagger
+ * components:
+ *   schemas:
+ *     TargetType:
+ *       type: object
+ *       description: Entity with a description.
+ *       properties:
+ *         description:
+ *           type: string
+ *           description: The target type's description.
+ *       required:
+ *         - description
  */
 
 module.exports = (sequelize, Sequelize) => {

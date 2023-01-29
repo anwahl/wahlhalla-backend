@@ -1,11 +1,9 @@
-/**
- * @module server
- */
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 const express = require("express");
-const expressJSDocSwagger = require('express-jsdoc-swagger');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
@@ -21,25 +19,20 @@ var corsOptions = {
 };
 const PORT = process.env.PORT || 8080;
 
-const options = {
+const swaggerDefinition = {
+  openapi: '3.0.0',
   info: {
+    title: 'Wahlhalla: Task Tracking API',
     version: '0.0.1',
-    description: 'Task Tracking API',
-    title: 'Wahlhalla',
-    license: {
-      name: 'MIT',
-    },
   },
-  baseDir: __dirname,
-  filesPattern: './**/*.js',
-  swaggerUIPath: '/api-docs',
-  exposeSwaggerUI: true,
-  exposeApiDocs: true,
-  apiDocsPath: '/v1/api-docs',
-  notRequiredAsNullable: false,
-  swaggerUiOptions: {},
-  multiple: true,
 };
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./app/**/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
 
 const db = require("./app/models");
 const { Op } = require('sequelize');
@@ -55,7 +48,7 @@ app.use(cors(corsOptions))
         console.log(`Server is running on port ${PORT}.`)
     });
 
-expressJSDocSwagger(app)(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 if (process.env.NODE_ENV === 'production') {
     var jwtCheck = jwt({
@@ -89,9 +82,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(Sentry.Handlers.errorHandler());
   }
   
-/**
- * @summary Emails the defined addresses daily at 7:30 am the tasks of the day using Zeptomail.
- */
 if (process.env.NODE_ENV === 'production') {
     const job = schedule.scheduleJob('30 14 * * *', function(){
         const AssignedTask = db.assignedTasks;
@@ -165,10 +155,6 @@ if (process.env.NODE_ENV === 'production') {
         });
     });
 }
-
-
-
-
 
 require("./app/routes/assignedTask.routes")(app);
 require("./app/routes/person.routes")(app);
