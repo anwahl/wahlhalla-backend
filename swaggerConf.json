@@ -1,9 +1,10 @@
 {
     "swaggerDefinition": {
+      "openapi": "3.0.0",
       "info": {
-        "title": "Wahlhalla",
+        "title": "Wahlhalla: Task Tracking API",
         "version": "0.0.1"
       }
     },
     "apis": ["./app/**/*.js"]
-  }
+}

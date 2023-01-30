@@ -6,10 +6,39 @@ const Op = db.Sequelize.Op;
 const Sequelize = require("sequelize");
 
 module.exports = class PersonController  {
+    
+    /**
+     * @swagger
+     * tags:
+     *   - name: Person
+     *     description: An entity that is designed to track who a task is assigned to. More is planned in future versions.
+     */
     constructor() {
         
      }
      
+     /**
+      * @swagger
+      * /api/person:
+      *     get:
+      *         tags:
+      *           - Person
+      *         summary: returns a list of all persons
+      *         description: Retrieves a list of all persons.
+      *         responses:
+      *             200:
+      *                 description: a list of all persons ordered by last name.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Person'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
      findAll = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -27,7 +56,36 @@ module.exports = class PersonController  {
             });
         });
     };
-        
+       
+    /**
+      * @swagger
+      * /api/person/{id}:
+      *     get:
+      *         tags:
+      *           - Person
+      *         summary: returns a person by ID.
+      *         description: Retrieves person by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the person to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: a person found by specified ID.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/Person'
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find person with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     findOne = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -52,6 +110,37 @@ module.exports = class PersonController  {
         });
     };
     
+    /**
+      * @swagger
+      * /api/person/{id}:
+      *     put:
+      *         tags:
+      *           - Person
+      *         summary: updates a person by ID.
+      *         description: Updates person by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the person to update.
+      *            schema:
+      *              type: integer
+      *         requestBody:
+      *           description: Updated Person
+      *           content:
+      *             application/json:
+      *               schema:
+      *                 $ref: '#/components/schemas/Person'
+      *         responses:
+      *             200:
+      *                 description: Person was updated successfully.
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find person with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     update = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -93,7 +182,32 @@ module.exports = class PersonController  {
             res.send({message: "Some error occurred while retrieving person. " + err });
         });
     };
-        
+    
+    /**
+      * @swagger
+      * /api/person/{id}:
+      *     delete:
+      *         tags:
+      *           - Person
+      *         summary: deletes an person by the provided ID.
+      *         description: Deletes an person by the provided ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the person to delete.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: Person was deleted successfully!
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot delete Person with id={id}. Maybe Person was not found!
+      *             500:
+      *                 description: Could not delete person with id={id}
+      */
     delete = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -123,6 +237,33 @@ module.exports = class PersonController  {
         });
     };
 
+    /**
+      * @swagger
+      * /api/person/:
+      *     post:
+      *         tags:
+      *           - Person
+      *         summary: creates an person with the provided parameters.
+      *         description: Creates an person with the provided parameters
+      *         requestBody:
+      *            description: Person To Create
+      *            required: true
+      *            content:
+      *              application/json:
+      *                schema:
+      *                  $ref: '#/components/schemas/Person'
+      *         responses:
+      *             200:
+      *                 description: Returns the newly created person.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/Person'              
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     create = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -158,6 +299,35 @@ module.exports = class PersonController  {
         });
     };
 
+    /**
+      * @swagger
+      * /api/person/name/{name}:
+      *     get:
+      *         tags:
+      *           - Person
+      *         summary: returns a person by name.
+      *         description: Retrieves person by name.
+      *         parameters:
+      *          - in: path
+      *            name: name
+      *            required: true
+      *            description: Name of the person to retrieve.
+      *            schema:
+      *              type: string
+      *         responses:
+      *             200:
+      *                 description: a person found by specified name.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Person'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByName = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

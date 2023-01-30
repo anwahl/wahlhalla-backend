@@ -7,6 +7,13 @@ const Task = db.tasks;
 const Op = db.Sequelize.Op;
 
 module.exports = class TaskController {
+
+    /**
+     * @swagger
+     * tags:
+     *   - name: Task
+     *     description: An entity that is designed to be reuasable for reassignment of tasks.
+     */
     constructor() {
      }
 

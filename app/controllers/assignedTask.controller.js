@@ -762,8 +762,8 @@ module.exports = class AssignedTaskController {
       *                 content:
       *                     application/json:
       *                       schema:
-      *                         type: array
-      *                         items:
+      *                         type: object
+      *                         properties:
       *                           id:
       *                             type: integer
       *                             description: ID of the assigned task that was created.

@@ -5,6 +5,13 @@ const TaskType = db.taskTypes;
 const Op = db.Sequelize.Op;
 
 module.exports = class TaskTypeController {
+    
+    /**
+     * @swagger
+     * tags:
+     *   - name: Task Type
+     *     description: An entity that is designed to describe a task.
+     */
     constructor() {
      }
 

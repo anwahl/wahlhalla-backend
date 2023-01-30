@@ -15,5 +15,5 @@ jobs:
       - run: widdershins swaggerOut.json -o swaggerMd.md -c -l --omitHeader
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: swaggerMd
           path: ./swaggerMd.md
