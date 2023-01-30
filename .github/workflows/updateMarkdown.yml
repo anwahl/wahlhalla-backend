@@ -1,0 +1,19 @@
+name: Update Markdown
+run-name: ${{ github.actor }} is updating the swagger markdown.
+on: [push]
+jobs:
+  update-swagger-markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install -g swagger-jsdoc-generator
+      - run: npm install -g widdershins
+      - run: swagger-jsdoc-generator swaggerConf.json > swaggerOut.json
+      - run: widdershins swaggerOut.json -o swaggerMd.md -c -l --omitHeader
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: ./swaggerMd.md

@@ -53,19 +53,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -77,11 +84,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -108,11 +115,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -131,11 +138,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -233,19 +240,26 @@ module.exports = class AssignedTaskController {
       *                             description: The ID of the task for the assigned task.
       *                             example: 56
       *                           type:
-      *                             type: enum
+      *                             type: string
+      *                             enum:
+      *                               - DAILY
+      *                               - WEEKLY
+      *                               - BIWEEKLY
+      *                               - MONTHLY
+      *                               - YEARLY
+      *                               - STANDALONE
       *                             description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                             example: WEEKLY
       *                           timeOfDay:
-      *                             type: time
+      *                             type: string
       *                             description: The start time of the assigned task.
       *                             example: 10:00
       *                           endTimeOfDay:
-      *                             type: time
+      *                             type: string
       *                             description: The end time of the assigned task.
       *                             example: 12:00
       *                           dueDate:
-      *                             type: date
+      *                             type: string
       *                             description: The due date of the assigned task.
       *                             example: 2022-11-15
       *                           occurrences:
@@ -257,11 +271,11 @@ module.exports = class AssignedTaskController {
       *                             description: Whether the assigned task is complete.
       *                             example: true
       *                           createdAt:
-      *                             type: date
+      *                             type: string
       *                             description: The date the assigned task was created.
       *                             example: 2023-01-01T01:13:51.000Z
       *                           updatedAt:
-      *                             type: date
+      *                             type: string
       *                             description: The date the assigned task was updated.
       *                             example: 2023-01-01T01:13:51.000Z
       *                           task:
@@ -288,11 +302,11 @@ module.exports = class AssignedTaskController {
       *                                 description: The value of the task.
       *                                 example: 150
       *                               createdAt:
-      *                                 type: date
+      *                                 type: string
       *                                 description: The date the task was created.
       *                                 example: 2023-01-01T01:13:51.000Z
       *                               updatedAt:
-      *                                 type: date
+      *                                 type: string
       *                                 description: The date the task was updated.
       *                                 example: 2023-01-01T01:13:51.000Z
       *                               target:
@@ -311,11 +325,11 @@ module.exports = class AssignedTaskController {
       *                                     description: The ID of the target type for the target.
       *                                     example: 2
       *                                   createdAt:
-      *                                     type: date
+      *                                     type: string
       *                                     description: The date the target was created.
       *                                     example: 2023-01-01T01:13:51.000Z
       *                                   updatedAt:
-      *                                     type: date
+      *                                     type: string
       *                                     description: The date the target was updated.
       *                                     example: 2023-01-01T01:13:51.000Z
       *                           person:
@@ -338,11 +352,11 @@ module.exports = class AssignedTaskController {
       *                                 description: The person's email.
       *                                 example: admin@wahlhalla.com
       *                               createdAt:
-      *                                 type: date
+      *                                 type: string
       *                                 description: The date the person was created.
       *                                 example: 2023-01-01T01:13:51.000Z
       *                               updatedAt:
-      *                                 type: date
+      *                                 type: string
       *                                 description: The date the person was updated.
       *                                 example: 2023-01-01T01:13:51.000Z                        
       *             400:
@@ -884,19 +898,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -908,11 +929,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -939,11 +960,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -962,11 +983,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -989,11 +1010,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The person's email.
       *                                   example: admin@wahlhalla.com
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was updated.
       *                                   example: 2023-01-01T01:13:51.000Z                        
       *             400:
@@ -1251,19 +1272,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -1275,11 +1303,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -1306,11 +1334,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -1329,11 +1357,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -1356,11 +1384,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The person's email.
       *                                   example: admin@wahlhalla.com
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was updated.
       *                                   example: 2023-01-01T01:13:51.000Z                        
       *             400:
@@ -1435,19 +1463,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -1459,11 +1494,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -1490,11 +1525,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -1513,11 +1548,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -1540,11 +1575,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The person's email.
       *                                   example: admin@wahlhalla.com
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was updated.
       *                                   example: 2023-01-01T01:13:51.000Z                        
       *             400:
@@ -1638,19 +1673,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -1662,11 +1704,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -1693,11 +1735,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -1716,11 +1758,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -1743,11 +1785,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The person's email.
       *                                   example: admin@wahlhalla.com
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was updated.
       *                                   example: 2023-01-01T01:13:51.000Z                        
       *             400:
@@ -1840,19 +1882,26 @@ module.exports = class AssignedTaskController {
       *                               description: The ID of the task for the assigned task.
       *                               example: 56
       *                             type:
-      *                               type: enum
+      *                               type: string
+      *                               enum:
+      *                                 - DAILY
+      *                                 - WEEKLY
+      *                                 - BIWEEKLY
+      *                                 - MONTHLY
+      *                                 - YEARLY
+      *                                 - STANDALONE
       *                               description: The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].
       *                               example: WEEKLY
       *                             timeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The start time of the assigned task.
       *                               example: 10:00
       *                             endTimeOfDay:
-      *                               type: time
+      *                               type: string
       *                               description: The end time of the assigned task.
       *                               example: 12:00
       *                             dueDate:
-      *                               type: date
+      *                               type: string
       *                               description: The due date of the assigned task.
       *                               example: 2022-11-15
       *                             occurrences:
@@ -1864,11 +1913,11 @@ module.exports = class AssignedTaskController {
       *                               description: Whether the assigned task is complete.
       *                               example: true
       *                             createdAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was created.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             updatedAt:
-      *                               type: date
+      *                               type: string
       *                               description: The date the assigned task was updated.
       *                               example: 2023-01-01T01:13:51.000Z
       *                             task:
@@ -1895,11 +1944,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The value of the task.
       *                                   example: 150
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the task was updated.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 target:
@@ -1918,11 +1967,11 @@ module.exports = class AssignedTaskController {
       *                                       description: The ID of the target type for the target.
       *                                       example: 2
       *                                     createdAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was created.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                                     updatedAt:
-      *                                       type: date
+      *                                       type: string
       *                                       description: The date the target was updated.
       *                                       example: 2023-01-01T01:13:51.000Z
       *                             person:
@@ -1945,11 +1994,11 @@ module.exports = class AssignedTaskController {
       *                                   description: The person's email.
       *                                   example: admin@wahlhalla.com
       *                                 createdAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was created.
       *                                   example: 2023-01-01T01:13:51.000Z
       *                                 updatedAt:
-      *                                   type: date
+      *                                   type: string
       *                                   description: The date the person was updated.
       *                                   example: 2023-01-01T01:13:51.000Z                        
       *             400:

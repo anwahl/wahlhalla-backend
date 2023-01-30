@@ -1,0 +1,9 @@
+{
+    "swaggerDefinition": {
+      "info": {
+        "title": "Wahlhalla",
+        "version": "0.0.1"
+      }
+    },
+    "apis": ["./app/**/*.js"]
+  }
