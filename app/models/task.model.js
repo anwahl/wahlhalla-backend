@@ -6,6 +6,10 @@
  *       type: object
  *       description: Entity with a description, task type, target, and value. Uniqueness is defined by the description, task type, and target.
  *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID of the task.
+ *           example: 10
  *         description:
  *           type: string
  *           description: The task's description.
@@ -22,6 +26,14 @@
  *           type: integer
  *           description: The value of the task.
  *           example: 150
+ *         createdAt:
+ *           type: date
+ *           description: The date the task was created.
+ *           example: 2023-01-01T01:13:51.000Z
+ *         updatedAt:
+ *           type: date
+ *           description: The date the task was updated.
+ *           example: 2023-01-01T01:13:51.000Z 
  *       required:
  *         - description
  *         - typeId

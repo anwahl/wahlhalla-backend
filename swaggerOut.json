@@ -1,0 +1,3022 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Wahlhalla: Task Tracking API",
+    "version": "0.0.1"
+  },
+  "swagger": "2.0",
+  "paths": {
+    "/api/assignedTask": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks",
+        "description": "Retrieves a list of all assigned tasks.",
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "date",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "date",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/{id}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a single assigned task by the provided ID.",
+        "description": "Retrieves a single assigned task by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the assigned task to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a single assigned task joined with its task, the task's target, and the assigned task's person.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the assigned task.",
+                      "example": 10
+                    },
+                    "personId": {
+                      "type": "integer",
+                      "description": "The ID of the person assigned to the assigned task.",
+                      "example": 5
+                    },
+                    "taskId": {
+                      "type": "integer",
+                      "description": "The ID of the task for the assigned task.",
+                      "example": 56
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "DAILY",
+                        "WEEKLY",
+                        "BIWEEKLY",
+                        "MONTHLY",
+                        "YEARLY",
+                        "STANDALONE"
+                      ],
+                      "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                      "example": "WEEKLY"
+                    },
+                    "timeOfDay": {
+                      "type": "string",
+                      "description": "The start time of the assigned task.",
+                      "example": 600
+                    },
+                    "endTimeOfDay": {
+                      "type": "string",
+                      "description": "The end time of the assigned task.",
+                      "example": 720
+                    },
+                    "dueDate": {
+                      "type": "string",
+                      "description": "The due date of the assigned task.",
+                      "example": "2022-11-15T00:00:00.000Z"
+                    },
+                    "occurrences": {
+                      "type": "integer",
+                      "description": "The number of occurrences of the assigned task.",
+                      "example": 12
+                    },
+                    "complete": {
+                      "type": "boolean",
+                      "description": "Whether the assigned task is complete.",
+                      "example": true
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "The date the assigned task was created.",
+                      "example": "2023-01-01T01:13:51.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "The date the assigned task was updated.",
+                      "example": "2023-01-01T01:13:51.000Z"
+                    },
+                    "task": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID of the task.",
+                          "example": 31
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "The task's description.",
+                          "example": "task description"
+                        },
+                        "typeId": {
+                          "type": "integer",
+                          "description": "The ID of the task type for the task.",
+                          "example": 9
+                        },
+                        "targetId": {
+                          "type": "integer",
+                          "description": "The ID of the target for the task.",
+                          "example": 3
+                        },
+                        "value": {
+                          "type": "integer",
+                          "description": "The value of the task.",
+                          "example": 150
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "The date the task was created.",
+                          "example": "2023-01-01T01:13:51.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "The date the task was updated.",
+                          "example": "2023-01-01T01:13:51.000Z"
+                        },
+                        "target": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "description": "ID of the target.",
+                              "example": 5
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "The target's description.",
+                              "example": "target description"
+                            },
+                            "typeId": {
+                              "type": "integer",
+                              "description": "The ID of the target type for the target.",
+                              "example": 2
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "description": "The date the target was created.",
+                              "example": "2023-01-01T01:13:51.000Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "description": "The date the target was updated.",
+                              "example": "2023-01-01T01:13:51.000Z"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "person": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "ID of the person.",
+                          "example": 5
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "description": "The person's first name.",
+                          "example": "Annie"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "description": "The person's last name.",
+                          "example": "Wahl"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "The person's email.",
+                          "example": "admin@wahlhalla.com"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "The date the person was created.",
+                          "example": "2023-01-01T01:13:51.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "The date the person was updated.",
+                          "example": "2023-01-01T01:13:51.000Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "cannot find assigned task with provided ID"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "updates an assigned task by the provided ID.",
+        "description": "Updates an assigned task by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the assigned task to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Assigned Task",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignedTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assigned Task was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot update Assigned Task(s) with id={id}. Maybe Assigned Task was not found or req.body is empty!"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "deletes an assigned task by the provided ID.",
+        "description": "Deletes an assigned task by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the assigned task to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assigned Task was deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Assigned Task with id={id}. Maybe Assigned Task was not found!"
+          },
+          "500": {
+            "description": "Could not delete Assigned Task with id={id}"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/series/{id}": {
+      "put": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "updates all occurrences of assigned tasks in a series by the provided ID.",
+        "description": "Updates all occurrences of assigned tasks in a series by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the assigned task to update and find the series of.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Assigned Task",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignedTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assigned Task(s) was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot update Assigned Task(s) with id={id}. Maybe Assigned Task was not found or req.body is empty!"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "deletes an assigned task and its series by the provided ID.",
+        "description": "Deletes an assigned task and its series by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the assigned task to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assigned Tasks were deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Assigned Task with id={id}. Maybe Assigned Task was not found!"
+          },
+          "500": {
+            "description": "Could not delete Assigned Task with id={id}"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/": {
+      "post": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "creates an assigned task with the provided parameters.",
+        "description": "Creates an assigned task with the provided parameters",
+        "requestBody": {
+          "description": "Assigned Task To Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignedTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the newly created assigned task.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "ID of the assigned task that was created.",
+                      "example": 5
+                    },
+                    "$ref": "#/components/schemas/AssignedTask",
+                    "createdAt": {
+                      "type": "date",
+                      "description": "The date the assigned task was created.",
+                      "example": "2023-01-01T01:13:51.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "date",
+                      "description": "The date the assigned task was updated.",
+                      "example": "2023-01-01T01:13:51.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/person/{personId}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks assigned to provided person.",
+        "description": "Retrieves a list of all assigned tasks assigned to provided person.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "personId",
+            "required": true,
+            "description": "Numeric ID of the person to find the assigned tasks of.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/type/{type}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks with the provided schedule type.",
+        "description": "Retrieves a list of all assigned tasks with the provided schedule type.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "description": "Schedule type .",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "enum",
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "time",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "time",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "date",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "date",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "date",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "date",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "date",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "date",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "date",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "date",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "date",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/completion/{complete}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks that are complete or not.",
+        "description": "Retrieves a list of all assigned tasks that are complete or not.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "complete",
+            "required": true,
+            "description": "Whether the assigned tasks are complete.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/dueDate/{dueDate}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks by due date.",
+        "description": "Retrieves a list of all assigned tasks by due date.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dueDate",
+            "required": true,
+            "description": "Due date of the assigned tasks.",
+            "schema": {
+              "type": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/que/ry": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks by query.",
+        "description": "Retrieves a list of all assigned tasks by query.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dueDate",
+            "required": false,
+            "description": "Due date of the assigned tasks.",
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "in": "query",
+            "name": "complete",
+            "required": false,
+            "description": "Completion status of the assigned tasks.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "description": "Schedule type of the assigned tasks.",
+            "schema": {
+              "type": "enum"
+            }
+          },
+          {
+            "in": "query",
+            "name": "personId",
+            "required": false,
+            "description": "Person assigned to the assigned tasks.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/assignedTask/category/{category}": {
+      "get": {
+        "tags": [
+          "Assigned Task"
+        ],
+        "summary": "returns a list of all assigned tasks by specified category.",
+        "description": "Retrieves a list of all assigned tasks by specified category.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "category",
+            "required": true,
+            "description": "Category of the assigned tasks' tasks' task type.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "APPOINTMENT",
+                "BILL",
+                "CHORE",
+                "LIST",
+                "OTHER"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a list of all assigned tasks joined with their tasks, those tasks' targets, and the assigned tasks' persons.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "ID of the assigned task.",
+                        "example": 10
+                      },
+                      "personId": {
+                        "type": "integer",
+                        "description": "The ID of the person assigned to the assigned task.",
+                        "example": 5
+                      },
+                      "taskId": {
+                        "type": "integer",
+                        "description": "The ID of the task for the assigned task.",
+                        "example": 56
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DAILY",
+                          "WEEKLY",
+                          "BIWEEKLY",
+                          "MONTHLY",
+                          "YEARLY",
+                          "STANDALONE"
+                        ],
+                        "description": "The schedule type of the assigned task. In ['DAILY', 'WEEKLY', 'BIWEEKLY', 'MONTHLY', 'YEARLY', 'STANDALONE'].",
+                        "example": "WEEKLY"
+                      },
+                      "timeOfDay": {
+                        "type": "string",
+                        "description": "The start time of the assigned task.",
+                        "example": 600
+                      },
+                      "endTimeOfDay": {
+                        "type": "string",
+                        "description": "The end time of the assigned task.",
+                        "example": 720
+                      },
+                      "dueDate": {
+                        "type": "string",
+                        "description": "The due date of the assigned task.",
+                        "example": "2022-11-15T00:00:00.000Z"
+                      },
+                      "occurrences": {
+                        "type": "integer",
+                        "description": "The number of occurrences of the assigned task.",
+                        "example": 12
+                      },
+                      "complete": {
+                        "type": "boolean",
+                        "description": "Whether the assigned task is complete.",
+                        "example": true
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was created.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "description": "The date the assigned task was updated.",
+                        "example": "2023-01-01T01:13:51.000Z"
+                      },
+                      "task": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the task.",
+                            "example": 31
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "The task's description.",
+                            "example": "task description"
+                          },
+                          "typeId": {
+                            "type": "integer",
+                            "description": "The ID of the task type for the task.",
+                            "example": 9
+                          },
+                          "targetId": {
+                            "type": "integer",
+                            "description": "The ID of the target for the task.",
+                            "example": 3
+                          },
+                          "value": {
+                            "type": "integer",
+                            "description": "The value of the task.",
+                            "example": 150
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the task was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the task was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "target": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "ID of the target.",
+                                "example": 5
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "The target's description.",
+                                "example": "target description"
+                              },
+                              "typeId": {
+                                "type": "integer",
+                                "description": "The ID of the target type for the target.",
+                                "example": 2
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "The date the target was created.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "The date the target was updated.",
+                                "example": "2023-01-01T01:13:51.000Z"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "person": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "ID of the person.",
+                            "example": 5
+                          },
+                          "firstName": {
+                            "type": "string",
+                            "description": "The person's first name.",
+                            "example": "Annie"
+                          },
+                          "lastName": {
+                            "type": "string",
+                            "description": "The person's last name.",
+                            "example": "Wahl"
+                          },
+                          "email": {
+                            "type": "string",
+                            "description": "The person's email.",
+                            "example": "admin@wahlhalla.com"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "The date the person was created.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "The date the person was updated.",
+                            "example": "2023-01-01T01:13:51.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/person": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "returns a list of all persons",
+        "description": "Retrieves a list of all persons.",
+        "responses": {
+          "200": {
+            "description": "a list of all persons ordered by last name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Person"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/person/{id}": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "returns a person by ID.",
+        "description": "Retrieves person by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the person to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a person found by specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find person with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "updates a person by ID.",
+        "description": "Updates person by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the person to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Person",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Person was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find person with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "deletes an person by the provided ID.",
+        "description": "Deletes an person by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the person to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person was deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Person with id={id}. Maybe Person was not found!"
+          },
+          "500": {
+            "description": "Could not delete person with id={id}"
+          }
+        }
+      }
+    },
+    "/api/person/": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "creates an person with the provided parameters.",
+        "description": "Creates an person with the provided parameters",
+        "requestBody": {
+          "description": "Person To Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the newly created person.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/person/name/{name}": {
+      "get": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "returns a person by name.",
+        "description": "Retrieves person by name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "description": "Name of the person to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a person found by specified name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Person"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/subtask": {
+      "get": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "returns a list of all subtasks",
+        "description": "Retrieves a list of all subtasks.",
+        "responses": {
+          "200": {
+            "description": "a list of all subtasks ordered by last name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subtask"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/subtask/{id}": {
+      "get": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "returns a subtask by ID.",
+        "description": "Retrieves subtask by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the subtask to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a subtask found by specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subtask"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find subtask with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "updates a subtask by ID.",
+        "description": "Updates subtask by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the subtask to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Subtask",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subtask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subtask was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find subtask with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "deletes an subtask by the provided ID.",
+        "description": "Deletes an subtask by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the subtask to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subtask was deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Subtask with id={id}. Maybe Subtask was not found!"
+          },
+          "500": {
+            "description": "Could not delete subtask with id={id}"
+          }
+        }
+      }
+    },
+    "/api/subtask/": {
+      "post": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "creates an subtask with the provided parameters.",
+        "description": "Creates an subtask with the provided parameters",
+        "requestBody": {
+          "description": "Subtask To Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subtask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the newly created subtask.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subtask"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/subtask/assignedTask/{assignedTaskId}": {
+      "get": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "returns subtasks by assigned task.",
+        "description": "Retrieves subtasks by assigned task.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assignedTaskId",
+            "required": true,
+            "description": "ID of the assigned task of the subtasks to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "subtasks found by specified assigned task.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subtask"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/subtask/description/{description}": {
+      "get": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "returns subtasks by name.",
+        "description": "Retrieves subtasks by name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "description",
+            "required": true,
+            "description": "Description of the subtasks to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "subtasks found by specified description.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subtask"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/subtask/assignedTask/{assignedTaskId}/description/{description}": {
+      "get": {
+        "tags": [
+          "Subtask"
+        ],
+        "summary": "returns subtasks by assigned task and description.",
+        "description": "Retrieves subtasks by assigned task and description.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assignedTaskId",
+            "required": true,
+            "description": "ID of the assigned task of the subtasks to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "description",
+            "required": true,
+            "description": "Description of the subtasks to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "subtasks found by specified assigned task and description.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subtask"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/target": {
+      "get": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "returns a list of all targets",
+        "description": "Retrieves a list of all targets.",
+        "responses": {
+          "200": {
+            "description": "a list of all targets ordered by description.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Target"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/target/{id}": {
+      "get": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "returns a target by ID.",
+        "description": "Retrieves target by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a target found by specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Target"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find target with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "updates a target by ID.",
+        "description": "Updates target by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated Target",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Target"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Target was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find target with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "deletes an target by the provided ID.",
+        "description": "Deletes an target by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Target was deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Target with id={id}. Maybe Target was not found!"
+          },
+          "500": {
+            "description": "Could not delete target with id={id}"
+          }
+        }
+      }
+    },
+    "/api/target/": {
+      "post": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "creates an target with the provided parameters.",
+        "description": "Creates an target with the provided parameters",
+        "requestBody": {
+          "description": "Target To Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Target"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the newly created target.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Target"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/target/type/{typeId}": {
+      "get": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "returns a target by name.",
+        "description": "Retrieves target by name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "typeId",
+            "required": true,
+            "description": "ID of the target type of the targets to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a target found by specified target type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Target"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown errors"
+          }
+        }
+      }
+    },
+    "/api/target/description/{description}": {
+      "get": {
+        "tags": [
+          "Target"
+        ],
+        "summary": "returns a target by name.",
+        "description": "Retrieves target by name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "description",
+            "required": true,
+            "description": "Description of the targets to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a target found by specified target type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Target"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/targetType": {
+      "get": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "returns a list of all target types",
+        "description": "Retrieves a list of all target types.",
+        "responses": {
+          "200": {
+            "description": "a list of all target types ordered by last name.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TargetType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/targetType/{id}": {
+      "get": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "returns a target type by ID.",
+        "description": "Retrieves target type by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target type to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a target type found by specified ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TargetType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find targetType with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "updates a target type by ID.",
+        "description": "Updates target type by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target type to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated TargetType",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TargetType was updated successfully."
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot find target type with id={id}."
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "deletes an target type by the provided ID.",
+        "description": "Deletes an target type by the provided ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Numeric ID of the target type to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TargetType was deleted successfully!"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "404": {
+            "description": "Cannot delete Target Type with id={id}. Maybe TargetType was not found!"
+          },
+          "500": {
+            "description": "Could not delete target type with id={id}"
+          }
+        }
+      }
+    },
+    "/api/targetType/": {
+      "post": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "creates an target type with the provided parameters.",
+        "description": "Creates an target type with the provided parameters",
+        "requestBody": {
+          "description": "Target Type To Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TargetType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the newly created target type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TargetType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "/api/targetType/description/{description}": {
+      "get": {
+        "tags": [
+          "Target Type"
+        ],
+        "summary": "returns a target type by description.",
+        "description": "Retrieves target type by description.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "description",
+            "required": true,
+            "description": "Description of the target type to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "target types found by specified description.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TargetType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "500": {
+            "description": "unknown error"
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "TaskType": {
+          "type": "object",
+          "description": "Entity with a description and category.",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "ID of the task type.",
+              "example": 10
+            },
+            "description": {
+              "type": "string",
+              "description": "The task type's description.",
+              "example": "task type description"
+            },
+            "category": {
+              "type": "enum",
+              "description": "The category of the task type. In [CHORE, BILL, APPOINTMENT, LIST, OTHER].",
+              "example": "APPOINTMENT"
+            },
+            "createdAt": {
+              "type": "date",
+              "description": "The date the task type was created.",
+              "example": "2023-01-01T01:13:51.000Z"
+            },
+            "updatedAt": {
+              "type": "date",
+              "description": "The date the task type was updated.",
+              "example": "2023-01-01T01:13:51.000Z"
+            }
+          },
+          "required": [
+            "description",
+            "category"
+          ]
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "Assigned Task",
+      "description": "An entity that marries a task to a date and (optionally) to a person, which can be tracked with a completion status, and can have subtasks."
+    },
+    {
+      "name": "Person",
+      "description": "An entity that is designed to track who a task is assigned to. More is planned in future versions."
+    },
+    {
+      "name": "Subtask",
+      "description": "An entity that can belong to an Assigned Task in a many-to-one relationship."
+    },
+    {
+      "name": "Target",
+      "description": "An entity representing an object or place to be the target of tasks."
+    },
+    {
+      "name": "Target Type",
+      "description": "An entity that is designed to describe a target."
+    },
+    {
+      "name": "Task",
+      "description": "An entity that is designed to be reuasable for reassignment of tasks."
+    },
+    {
+      "name": "Task Type",
+      "description": "An entity that is designed to describe a task."
+    }
+  ]
+}

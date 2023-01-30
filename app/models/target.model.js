@@ -6,6 +6,10 @@
  *       type: object
  *       description: Entity with a description and target type.
  *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID of the target.
+ *           example: 10
  *         description:
  *           type: string
  *           description: The target's description.
@@ -14,6 +18,14 @@
  *           type: integer
  *           description: The ID of the target type for the target.
  *           example: 2
+ *         createdAt:
+ *           type: date
+ *           description: The date the target was created.
+ *           example: 2023-01-01T01:13:51.000Z
+ *         updatedAt:
+ *           type: date
+ *           description: The date the target was updated.
+ *           example: 2023-01-01T01:13:51.000Z    
  *       required:
  *         - description
  *         - typeId

@@ -19,20 +19,14 @@ var corsOptions = {
 };
 const PORT = process.env.PORT || 8080;
 
-const swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'Wahlhalla: Task Tracking API',
-    version: '0.0.1',
-  },
-};
-const options = {
-  swaggerDefinition,
-  // Paths to files containing OpenAPI definitions
-  apis: ['./app/**/*.js'],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
+const swaggerSpec = swaggerJSDoc(require("./swaggerConf.json"));
+const swaggerOptions = {
+  customCss: '.swagger-ui .topbar { display: none }',
+  swaggerOptions: {
+    'syntaxHighlight.theme': 'nord',
+    filter: true
+  }
+}
 
 const db = require("./app/models");
 const { Op } = require('sequelize');
@@ -48,7 +42,7 @@ app.use(cors(corsOptions))
         console.log(`Server is running on port ${PORT}.`)
     });
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
 
 if (process.env.NODE_ENV === 'production') {
     var jwtCheck = jwt({
@@ -145,13 +139,6 @@ if (process.env.NODE_ENV === 'production') {
         })
         .catch(err => {
             console.log(err);
-            process.env.TO_NUMBER.split(',').forEach(num => {
-                twilio.messages.create({
-                  body: "Error retrieving todays due tasks. Error: " + err,
-                  from: process.env.FROM_NUMBER,
-                  to: num
-                }).then(message => console.log(message.body));
-              });
         });
     });
 }
