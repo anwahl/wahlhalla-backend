@@ -35,11 +35,11 @@
     "mysql2": "^2.3.3",
     "node-schedule": "^2.1.0",
     "npm": "^9.4.0",
+    "pg": "^8.9.0",
     "sequelize": "^6.21.3",
     "swagger-autogen": "^2.22.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",
-    "twilio": "^3.80.1",
     "url": "^0.11.0",
     "util": "^0.12.4",
     "zeptomail": "^3.0.3"

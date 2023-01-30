@@ -139,13 +139,6 @@ if (process.env.NODE_ENV === 'production') {
         })
         .catch(err => {
             console.log(err);
-            process.env.TO_NUMBER.split(',').forEach(num => {
-                twilio.messages.create({
-                  body: "Error retrieving todays due tasks. Error: " + err,
-                  from: process.env.FROM_NUMBER,
-                  to: num
-                }).then(message => console.log(message.body));
-              });
         });
     });
 }
