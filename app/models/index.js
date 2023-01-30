@@ -2,11 +2,13 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
   process.env.DATABASE_URL,
   {
-    host: process.env.DATABASE_HOST,
     dialect: 'postgres',
     dialectOptions: {
-      ssl: true,
-      native:true
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      },
+      native:true,
     }
   });
 /* Heroku Database Connection
