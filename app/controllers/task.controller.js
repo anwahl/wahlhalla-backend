@@ -17,6 +17,28 @@ module.exports = class TaskController {
     constructor() {
      }
 
+     /**
+      * @swagger
+      * /api/task:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a list of all tasks
+      *         description: Retrieves a list of all tasks.
+      *         responses:
+      *             200:
+      *                 description: a list of all tasks ordered by description.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
      findAll = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -41,7 +63,36 @@ module.exports = class TaskController {
             });
         });
     };
-        
+    
+    /**
+      * @swagger
+      * /api/task/{id}:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a task by ID.
+      *         description: Retrieves task by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: a task found by specified ID.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find task with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     findOne = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
