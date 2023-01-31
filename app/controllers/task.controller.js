@@ -17,6 +17,28 @@ module.exports = class TaskController {
     constructor() {
      }
 
+     /**
+      * @swagger
+      * /api/task:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a list of all tasks
+      *         description: Retrieves a list of all tasks.
+      *         responses:
+      *             200:
+      *                 description: a list of all tasks ordered by description.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
      findAll = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
