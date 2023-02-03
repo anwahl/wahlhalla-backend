@@ -15,6 +15,28 @@ module.exports = class TaskTypeController {
     constructor() {
      }
 
+     /**
+      * @swagger
+      * /api/taskType:
+      *     get:
+      *         tags:
+      *           - Task Type
+      *         summary: returns a list of all task types
+      *         description: Retrieves a list of all task types.
+      *         responses:
+      *             200:
+      *                 description: a list of all task types ordered by description.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/TaskType'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
      findAll = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -32,7 +54,36 @@ module.exports = class TaskTypeController {
             });
         });
     };
-        
+    
+    /**
+      * @swagger
+      * /api/taskType/{id}:
+      *     get:
+      *         tags:
+      *           - Task Type
+      *         summary: returns a task type by ID.
+      *         description: Retrieves task type by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task type to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: a task type found by specified ID.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/TaskType'
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find taskType with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     findOne = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -57,6 +108,37 @@ module.exports = class TaskTypeController {
         });
     };
     
+     /**
+      * @swagger
+      * /api/taskType/{id}:
+      *     put:
+      *         tags:
+      *           - Task Type
+      *         summary: updates a task type by ID.
+      *         description: Updates task type by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task type to update.
+      *            schema:
+      *              type: integer
+      *         requestBody:
+      *           description: Updated task type
+      *           content:
+      *             application/json:
+      *               schema:
+      *                 $ref: '#/components/schemas/TaskType'
+      *         responses:
+      *             200:
+      *                 description: TaskType was updated successfully.
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find taskType with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     update = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -101,7 +183,32 @@ module.exports = class TaskTypeController {
             res.send({message: "Some error occurred while retrieving Task Type. " + err });
         });
     };
-        
+      
+     /**
+      * @swagger
+      * /api/taskType/{id}:
+      *     delete:
+      *         tags:
+      *           - Task Type
+      *         summary: deletes an task type by the provided ID.
+      *         description: Deletes an task type by the provided ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task type to delete.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: TaskType was deleted successfully!
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot delete TaskType with id={id}. Maybe TaskType was not found!
+      *             500:
+      *                 description: Could not delete taskType with id={id}
+      */
     delete = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -131,7 +238,33 @@ module.exports = class TaskTypeController {
         });
     };
 
-
+    /**
+      * @swagger
+      * /api/taskType/:
+      *     post:
+      *         tags:
+      *           - Task Type
+      *         summary: creates an task type with the provided parameters.
+      *         description: Creates an task type with the provided parameters
+      *         requestBody:
+      *            description: TaskType To Create
+      *            required: true
+      *            content:
+      *              application/json:
+      *                schema:
+      *                  $ref: '#/components/schemas/TaskType'
+      *         responses:
+      *             200:
+      *                 description: Returns the newly created task type.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/TaskType'              
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     create = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -170,6 +303,35 @@ module.exports = class TaskTypeController {
         });
     };
 
+    /**
+      * @swagger
+      * /api/taskType/category/{category}:
+      *     get:
+      *         tags:
+      *           - Task Type
+      *         summary: returns a taskType by category.
+      *         description: Retrieves taskType by category.
+      *         parameters:
+      *          - in: path
+      *            name: category
+      *            required: true
+      *            description: Category of the task type to retrieve.
+      *            schema:
+      *              type: string
+      *         responses:
+      *             200:
+      *                 description: task types found by specified category.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/TaskType'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByCategory = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -190,6 +352,35 @@ module.exports = class TaskTypeController {
         });
     };
     
+    /**
+      * @swagger
+      * /api/taskType/description/{description}:
+      *     get:
+      *         tags:
+      *           - Task Type
+      *         summary: returns a taskType by description.
+      *         description: Retrieves taskType by description.
+      *         parameters:
+      *          - in: path
+      *            name: description
+      *            required: true
+      *            description: description of the task type to retrieve.
+      *            schema:
+      *              type: string
+      *         responses:
+      *             200:
+      *                 description: task types found by specified description.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/TaskType'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByDescription = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
