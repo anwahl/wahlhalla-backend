@@ -15,12 +15,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-            node-version: 16
-            cache: 'npm'
+          node-version: 16
+          cache: 'npm'
       - name: npm install, build, and test
-          run: |
-            npm install
-            npm run start
+        run:
+          npm install
+          npm start
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
