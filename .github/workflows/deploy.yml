@@ -12,18 +12,15 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
-          with:
+        with:
             node-version: 16
             cache: 'npm'
-
       - name: npm install, build, and test
           run: |
             npm install
             npm run start
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
