@@ -123,6 +123,37 @@ module.exports = class TaskController {
         });
     };
     
+    /**
+      * @swagger
+      * /api/task/{id}:
+      *     put:
+      *         tags:
+      *           - Task
+      *         summary: updates a task by ID.
+      *         description: Updates task by ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task to update.
+      *            schema:
+      *              type: integer
+      *         requestBody:
+      *           description: Updated Task
+      *           content:
+      *             application/json:
+      *               schema:
+      *                 $ref: '#/components/schemas/Task'
+      *         responses:
+      *             200:
+      *                 description: Task was updated successfully.
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot find task with id={id}.
+      *             500:
+      *                 description: unknown error
+      */
     update = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -164,7 +195,32 @@ module.exports = class TaskController {
             res.send({message: "Some error occurred while retrieving Task. " + err });
         });
     };
-        
+    
+    /**
+      * @swagger
+      * /api/task/{id}:
+      *     delete:
+      *         tags:
+      *           - Task
+      *         summary: deletes an task by the provided ID.
+      *         description: Deletes an task by the provided ID.
+      *         parameters:
+      *          - in: path
+      *            name: id
+      *            required: true
+      *            description: Numeric ID of the task to delete.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: Task was deleted successfully!
+      *             400:
+      *                 description: validation error
+      *             404:
+      *                 description: Cannot delete Task with id={id}. Maybe Task was not found!
+      *             500:
+      *                 description: Could not delete task with id={id}
+      */
     delete = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -194,7 +250,33 @@ module.exports = class TaskController {
         });
     };
 
-
+    /**
+      * @swagger
+      * /api/task/:
+      *     post:
+      *         tags:
+      *           - Task
+      *         summary: creates an task with the provided parameters.
+      *         description: Creates an task with the provided parameters
+      *         requestBody:
+      *            description: Task To Create
+      *            required: true
+      *            content:
+      *              application/json:
+      *                schema:
+      *                  $ref: '#/components/schemas/Task'
+      *         responses:
+      *             200:
+      *                 description: Returns the newly created task.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         $ref: '#/components/schemas/Task'              
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     create = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -232,6 +314,35 @@ module.exports = class TaskController {
         });
     };
 
+    /**
+      * @swagger
+      * /api/task/type/{typeId}:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a task by type.
+      *         description: Retrieves task by type.
+      *         parameters:
+      *          - in: path
+      *            name: typeId
+      *            required: true
+      *            description: ID of the type of the tasks to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: tasks found by specified type.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByType= (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -259,6 +370,41 @@ module.exports = class TaskController {
         });
     };
 
+    /**
+      * @swagger
+      * /api/task/targetAndType/{targetId}/{typeId}:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a task by type.
+      *         description: Retrieves task by type.
+      *         parameters:
+      *          - in: path
+      *            name: targetId
+      *            required: true
+      *            description: ID of the target of the task to retrieve.
+      *            schema:
+      *              type: integer
+      *          - in: path
+      *            name: typeId
+      *            required: true
+      *            description: ID of the type of the tasks to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: tasks found by specified target and  type.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByTargetAndType= (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -287,6 +433,35 @@ module.exports = class TaskController {
         });
     };
 
+    /**
+      * @swagger
+      * /api/task/description/{description}:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a task by description.
+      *         description: Retrieves task by description.
+      *         parameters:
+      *          - in: path
+      *            name: description
+      *            required: true
+      *            description: Description of the tasks to retrieve.
+      *            schema:
+      *              type: string
+      *         responses:
+      *             200:
+      *                 description: tasks found by specified description.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByDescription = (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -314,6 +489,35 @@ module.exports = class TaskController {
         });
     };
 
+    /**
+      * @swagger
+      * /api/task/target/{targetId}:
+      *     get:
+      *         tags:
+      *           - Task
+      *         summary: returns a task by target.
+      *         description: Retrieves task by target.
+      *         parameters:
+      *          - in: path
+      *            name: targetId
+      *            required: true
+      *            description: ID of the target of the tasks to retrieve.
+      *            schema:
+      *              type: integer
+      *         responses:
+      *             200:
+      *                 description: tasks found by specified target.
+      *                 content:
+      *                     application/json:
+      *                       schema:
+      *                         type: array
+      *                         items:
+      *                           $ref: '#/components/schemas/Task'
+      *             400:
+      *                 description: validation error
+      *             500:
+      *                 description: unknown error
+      */
     findByTarget= (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
