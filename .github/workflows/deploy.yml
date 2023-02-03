@@ -25,4 +25,4 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "wahlhalla"
-          entrypoint: "./server.js" 
+          entrypoint: "server.js" 
