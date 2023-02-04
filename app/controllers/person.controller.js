@@ -316,7 +316,7 @@ module.exports = class PersonController  {
       *              type: string
       *         responses:
       *             200:
-      *                 description: a person found by specified name.
+      *                 description: persons found by specified name.
       *                 content:
       *                     application/json:
       *                       schema:
